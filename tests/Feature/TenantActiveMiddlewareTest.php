@@ -19,7 +19,7 @@ class TenantActiveMiddlewareTest extends TestCase
     {
         $tenant = Tenant::factory()->create();
 
-        $this->get('https://' . $tenant->fresh()->domains()->first()->domain)->assertStatus(404);
+        $this->get(route('tenant.home', $tenant))->assertStatus(404);
     }
 
     /** @test */
@@ -27,6 +27,6 @@ class TenantActiveMiddlewareTest extends TestCase
     {
         $tenant = Tenant::factory()->active()->create();
 
-        $this->get('https://' . $tenant->fresh()->domains()->first()->domain)->assertSuccessful();
+        $this->get(route('tenant.home', $tenant))->assertSuccessful();
     }
 }
