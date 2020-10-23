@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'domain' => preg_replace('(^https?://)', '', env('APP_URL', 'http://localhost')),
 
     'asset_url' => env('ASSET_URL', null),
 

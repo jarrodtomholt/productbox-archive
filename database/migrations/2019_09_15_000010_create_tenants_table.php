@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateTenantsTable extends Migration
 {
@@ -18,7 +16,12 @@ class CreateTenantsTable extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->string('id')->primary();
 
-            // your custom columns may go here
+            $table->string('name');
+            $table->string('slug');
+            $table->string('abn', 11)->nullable();
+            $table->string('email');
+            $table->string('phone');
+            $table->boolean('active')->default(false);
 
             $table->timestamps();
             $table->json('data')->nullable();

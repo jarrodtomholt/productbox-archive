@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $tenant1 = \App\Models\Tenant::create([
+        'name' => 'Test',
+        'email' => 'test@test.com',
+        'phone' => '123456',
+        'active' => false,
+    ]);
+    $tenant1->domains()->create(['domain' => 'test.productbox.test']);
+
     return view('welcome');
 });
