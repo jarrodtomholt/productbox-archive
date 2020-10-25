@@ -19,7 +19,7 @@ class TenantActiveMiddlewareTest extends TestCase
     {
         $tenant = Tenant::factory()->create();
 
-        $this->get(route('tenant.home', $tenant))->assertStatus(404);
+        $this->get(tenant_route($tenant->domains()->first()->domain, 'tenant.home'))->assertStatus(404);
     }
 
     /** @test */
@@ -27,6 +27,8 @@ class TenantActiveMiddlewareTest extends TestCase
     {
         $tenant = Tenant::factory()->active()->create();
 
-        $this->get(route('tenant.home', $tenant))->assertSuccessful();
+        $this->get(tenant_route($tenant->domains()->first()->domain, 'tenant.home'))->assertSuccessful();
     }
+
+    // TODO - add subscription checks
 }
