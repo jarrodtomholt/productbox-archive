@@ -120,8 +120,7 @@ class TenancyServiceProvider extends ServiceProvider
     protected function mapRoutes()
     {
         if (file_exists(base_path('routes/tenant.php'))) {
-            Route::name('tenant.')
-            ->middleware([
+            Route::middleware([
                 InitializeTenancyByDomain::class,
                 PreventAccessFromCentralDomains::class,
                 'tenant.active',
@@ -131,9 +130,14 @@ class TenancyServiceProvider extends ServiceProvider
                     ->namespace('App\Http\Controllers')
                     ->group(base_path('routes/tenant.php'));
 
-
                 Route::middleware('api')
                     ->prefix('api')
+                    ->namespace('App\Http\Controllers')
+                    ->name('app.')
+                    ->group(base_path('routes/app.php'));
+
+                Route::middleware('api')
+                    ->prefix('manage/api')
                     ->namespace('App\Http\Controllers\Api\Manage')
                     ->name('manage.')
                     ->group(base_path('routes/manage.php'));

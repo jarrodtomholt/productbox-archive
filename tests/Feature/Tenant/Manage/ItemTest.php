@@ -30,7 +30,7 @@ class ItemTest extends TestCase
         $category = Category::factory()->create();
         $items = Item::factory()->count(rand(5, 10))->create(['category_id' => $category]);
 
-        $response = $this->getJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.items'))->assertSuccessful();
+        $response = $this->getJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.items'))->assertSuccessful();
 
         $items->each(function ($item) use ($response) {
             $response
@@ -45,7 +45,7 @@ class ItemTest extends TestCase
      */
     public function it_validates_required_fields($field, $value)
     {
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.items'), [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.items'), [
             $field => $value,
         ])->assertStatus(422)->assertJsonValidationErrors($field);
     }
@@ -67,7 +67,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->make();
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.items.store'), $item->toArray())
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.items.store'), $item->toArray())
         ->assertSuccessful()
         ->assertSee($item->name)
         ->assertSee($item->description);
@@ -87,7 +87,7 @@ class ItemTest extends TestCase
         $item = Item::factory()->make()->toArray();
         $item['image'] = UploadedFile::fake()->image('test-item-image.png');
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.items'), $item);
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.items'), $item);
 
         $item = Item::first();
 
@@ -104,7 +104,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.items.update', [
+        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.items.update', [
             'item' => $item,
         ]), [
             'name' => 'new item name',
@@ -138,7 +138,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.items.update', [
+        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.items.update', [
             'item' => $item,
         ]), [
             'name' => $item->name,
@@ -161,7 +161,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.items.destroy', [
+        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.items.destroy', [
             'item' => $item,
         ]))->assertSuccessful();
 

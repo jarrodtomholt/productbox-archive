@@ -31,7 +31,7 @@ class OptionsTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.options.store', [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.options.store', [
             'item' => $item,
         ]), [
             $field => $value,
@@ -54,7 +54,7 @@ class OptionsTest extends TestCase
 
         $option = Option::factory()->make();
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.options.store', [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.options.store', [
             'item' => $item,
         ]), $option->toArray())
         ->assertSuccessful()
@@ -76,7 +76,7 @@ class OptionsTest extends TestCase
 
         $updatedOption = Option::factory()->make(['name' => 'i am the new option name']);
 
-        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.options.update', [
+        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.options.update', [
             'item' => $item,
             'option' => $option,
         ]), $updatedOption->toArray())

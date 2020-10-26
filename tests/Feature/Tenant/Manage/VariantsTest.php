@@ -31,7 +31,7 @@ class VariantsTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.variants.store', [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.variants.store', [
             'item' => $item,
         ]), [
             $field => $value,
@@ -54,7 +54,7 @@ class VariantsTest extends TestCase
 
         $variant = Variant::factory()->make();
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.variants.store', [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.variants.store', [
             'item' => $item,
         ]), $variant->toArray())
         ->assertSuccessful()
@@ -76,7 +76,7 @@ class VariantsTest extends TestCase
 
         $updatedVariant = Variant::factory()->make(['name' => 'i am the new vairant name']);
 
-        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.variants.update', [
+        $this->patchJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.variants.update', [
             'item' => $item,
             'variant' => $variant,
         ]), $updatedVariant->toArray())

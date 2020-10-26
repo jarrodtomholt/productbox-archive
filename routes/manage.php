@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\Manage\CategoriesController;
 | Tenant Api and Management Routes
 |--------------------------------------------------------------------------
 |
-| Tenant routes are prefixed with 'tenant.manage.'
+| Tenant routes are prefixed with 'manage.'
 | and include necessary route middleware such as identifying tenants and
 | ensuring the tenant is active
 |

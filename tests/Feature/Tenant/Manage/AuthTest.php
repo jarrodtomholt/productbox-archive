@@ -17,7 +17,7 @@ class AuthTest extends TestCase
      */
     public function it_validates_username_and_password_fields($field, $value)
     {
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.auth.login'), [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.login'), [
             $field => $value,
         ])->assertStatus(422)->assertJsonValidationErrors($field);
     }
@@ -38,7 +38,7 @@ class AuthTest extends TestCase
             return Admin::factory()->create(['password' => 'secret']);
         });
 
-        $response = $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.auth.login'), [
+        $response = $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.login'), [
             'email' => 'another@randomemail.com',
             'password' => 'secret',
         ])->assertStatus(422);
@@ -51,7 +51,7 @@ class AuthTest extends TestCase
             return Admin::factory()->create(['password' => 'secret']);
         });
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.auth.login'), [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.login'), [
             'email' => $admin->email,
             'password' => 'not-a-secret-password',
         ])
@@ -65,7 +65,7 @@ class AuthTest extends TestCase
             return Admin::factory()->create(['password' => 'secret']);
         });
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.auth.login'), [
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.login'), [
             'email' => $admin->email,
             'password' => 'secret',
         ])->assertSuccessful()
@@ -75,7 +75,7 @@ class AuthTest extends TestCase
     /** @test */
     public function unauthenticated_users_cant_logout()
     {
-        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.auth.logout'))
+        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.logout'))
         ->assertStatus(401);
     }
 
@@ -88,7 +88,7 @@ class AuthTest extends TestCase
 
         Sanctum::actingAs($admin, [sprintf('manage:%s', $this->tenant->id)], 'admin');
 
-        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'tenant.manage.auth.logout'))
+        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.logout'))
         ->assertSuccessful();
     }
 
@@ -103,7 +103,7 @@ class AuthTest extends TestCase
 
         Sanctum::actingAs($admin, [sprintf('manage:%s', $this->tenant->id)], 'admin');
 
-        $this->deleteJson(tenant_route($tenant2->domains()->first()->domain, 'tenant.manage.auth.logout'))
+        $this->deleteJson(tenant_route($tenant2->domains()->first()->domain, 'manage.auth.logout'))
         ->assertStatus(401);
     }
 }
