@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Manage\AuthController;
 use App\Http\Controllers\Api\Manage\ItemsController;
+use App\Http\Controllers\Api\Manage\VariantsController;
 use App\Http\Controllers\Api\Manage\CategoriesController;
 
 /*
@@ -36,4 +37,7 @@ Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
     Route::post('items', [ItemsController::class, 'store'])->name('items.store');
     Route::patch('items/{item}', [ItemsController::class, 'update'])->name('items.update');
     Route::delete('items/{item}', [ItemsController::class, 'destroy'])->name('items.destroy');
+
+    Route::post('items/{item}/variants', [VariantsController::class, 'store'])->name('variants.store');
+    Route::patch('items/{item}/variants/{variant}', [VariantsController::class, 'update'])->name('variants.update');
 });

@@ -7,6 +7,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -45,9 +46,19 @@ class Item extends Model implements HasMedia
         return $this->belongsTo(Category::class);
     }
 
+    public function variants(): HasMany
+    {
+        return $this->hasMany(Variant::class);
+    }
+
     public function setPriceAttribute($value)
     {
         $this->attributes['price'] = intval($value * 100);
+    }
+
+    public function getImageAttribute()
+    {
+        return optional($this->getFirstMedia('image'))->getUrl();
     }
 
     public function setImage($image)
