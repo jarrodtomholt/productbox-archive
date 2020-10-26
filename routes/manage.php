@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Manage\AuthController;
+use App\Http\Controllers\Api\Manage\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,11 @@ Route::name('auth.')->group(function () {
     Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
         Route::delete('logout', [AuthController::class, 'delete'])->name('logout');
     });
+});
+
+Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
+    Route::get('categories', [CategoriesController::class, 'index'])->name('categories');
+    Route::post('categories', [CategoriesController::class, 'store'])->name('categories.store');
+    Route::patch('categories/{category}', [CategoriesController::class, 'update'])->name('categories.update');
+    Route::delete('categories/{category}', [CategoriesController::class, 'destroy'])->name('categories.destroy');
 });
