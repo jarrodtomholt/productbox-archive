@@ -48,7 +48,7 @@ class OptionsTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_new_item_Option()
+    public function it_creates_a_new_item_option()
     {
         $item = Item::factory()->create();
 
@@ -68,7 +68,7 @@ class OptionsTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_an_existing_Option()
+    public function it_updates_an_existing_option()
     {
         $item = Item::factory()->create();
 
