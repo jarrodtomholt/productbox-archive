@@ -41,7 +41,9 @@ Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
 
     Route::post('items/{item}/variants', [VariantsController::class, 'store'])->name('variants.store');
     Route::patch('items/{item}/variants/{variant}', [VariantsController::class, 'update'])->name('variants.update');
+    Route::delete('items/{item}/variants/{variant}', [VariantsController::class, 'destroy'])->name('variants.destroy');
 
     Route::post('items/{item}/options', [OptionsController::class, 'store'])->name('options.store');
     Route::patch('items/{item}/options/{option}', [OptionsController::class, 'update'])->name('options.update');
+    Route::delete('items/{item}/options/{option}', [OptionsController::class, 'destroy'])->name('options.destroy');
 });

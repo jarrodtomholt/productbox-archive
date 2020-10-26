@@ -93,4 +93,23 @@ class OptionsTest extends TestCase
             'name' => $option->name,
         ]);
     }
+
+    /** @test */
+    public function it_deletes_an_existing_option()
+    {
+        $item = Item::factory()->create();
+
+        $option = Option::factory()->create(['item_id' => $item, 'name' => 'i am the old option name']);
+
+        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.options.destroy', [
+            'item' => $item,
+            'option' => $option,
+        ]))
+        ->assertSuccessful()
+        ->assertDontSee($option->name);
+
+        $this->assertDatabaseMissing('options', [
+            'name' => $option->name,
+        ]);
+    }
 }

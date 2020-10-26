@@ -93,4 +93,23 @@ class VariantsTest extends TestCase
             'name' => $variant->name,
         ]);
     }
+
+    /** @test */
+    public function it_deletes_an_existing_variant()
+    {
+        $item = Item::factory()->create();
+
+        $variant = Variant::factory()->create(['item_id' => $item, 'name' => 'i am the old vairant name']);
+
+        $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.variants.destroy', [
+            'item' => $item,
+            'variant' => $variant,
+        ]))
+        ->assertSuccessful()
+        ->assertDontSee($variant->name);
+
+        $this->assertDatabaseMissing('variants', [
+            'name' => $variant->name,
+        ]);
+    }
 }

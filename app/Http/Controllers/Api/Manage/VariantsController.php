@@ -29,4 +29,11 @@ class VariantsController extends Controller
 
         return new ItemResource($item->fresh());
     }
+
+    public function destroy(Item $item, Variant $variant)
+    {
+        $variant->delete();
+
+        return new ItemResource($item->fresh());
+    }
 }

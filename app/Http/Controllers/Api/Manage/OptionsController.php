@@ -29,4 +29,11 @@ class OptionsController extends Controller
 
         return new ItemResource($item->fresh());
     }
+
+    public function destroy(Item $item, Option $option)
+    {
+        $option->delete();
+
+        return new ItemResource($item->fresh());
+    }
 }
