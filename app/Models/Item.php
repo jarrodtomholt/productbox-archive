@@ -51,6 +51,11 @@ class Item extends Model implements HasMedia
         return $this->hasMany(Variant::class);
     }
 
+    public function options(): HasMany
+    {
+        return $this->hasMany(Option::class);
+    }
+
     public function setPriceAttribute($value)
     {
         $this->attributes['price'] = intval($value * 100);
