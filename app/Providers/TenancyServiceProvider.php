@@ -119,30 +119,28 @@ class TenancyServiceProvider extends ServiceProvider
 
     protected function mapRoutes()
     {
-        if (file_exists(base_path('routes/tenant.php'))) {
-            Route::middleware([
-                InitializeTenancyByDomain::class,
-                PreventAccessFromCentralDomains::class,
-                'tenant.active',
-            ])
-            ->group(function () {
-                Route::middleware('web')
-                    ->namespace('App\Http\Controllers')
-                    ->group(base_path('routes/tenant.php'));
+        Route::middleware([
+            InitializeTenancyByDomain::class,
+            PreventAccessFromCentralDomains::class,
+            'tenant.active',
+        ])
+        ->group(function () {
+            Route::middleware('web')
+                ->namespace('App\Http\Controllers')
+                ->group(base_path('routes/tenant.php'));
 
-                Route::middleware('api')
-                    ->prefix('api')
-                    ->namespace('App\Http\Controllers')
-                    ->name('app.')
-                    ->group(base_path('routes/app.php'));
+            Route::middleware('api')
+                ->prefix('api')
+                ->namespace('App\Http\Controllers')
+                ->name('app.')
+                ->group(base_path('routes/app.php'));
 
-                Route::middleware('api')
-                    ->prefix('manage/api')
-                    ->namespace('App\Http\Controllers\Api\Manage')
-                    ->name('manage.')
-                    ->group(base_path('routes/manage.php'));
-            });
-        }
+            Route::middleware('api')
+                ->prefix('manage/api')
+                ->namespace('App\Http\Controllers\Api\Manage')
+                ->name('manage.')
+                ->group(base_path('routes/manage.php'));
+        });
     }
 
     protected function makeTenancyMiddlewareHighestPriority()
