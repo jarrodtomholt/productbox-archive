@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use Spatie\Sluggable\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Item extends Model
+class Item extends Model implements HasMedia
 {
-    use HasSlug, HasFactory;
+    use HasSlug, HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'category_id',
@@ -41,5 +43,25 @@ class Item extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = intval($value * 100);
+    }
+
+    public function setImage($image)
+    {
+        $filename = sprintf('%s.%s', $this->slug, $image->getClientOriginalExtension());
+
+        if ($this->hasMedia('image')) {
+            return $this->updateMedia($image, 'image')->usingName($this->name)->usingFileName($filename);
+        }
+        $this->addMedia($image)->usingName($this->name)->usingFileName($filename)->toMediaCollection('image');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')->singleFile();
     }
 }

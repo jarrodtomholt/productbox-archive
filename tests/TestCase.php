@@ -25,11 +25,19 @@ abstract class TestCase extends BaseTestCase
 
     public function tearDown(): void
     {
-        parent::tearDown();
-
         // delete generated tenant databases
         foreach (glob(database_path('productbox_*')) as $database) {
             unlink($database);
         }
+
+        // delete all tenant storage
+        foreach (glob(base_path('storage/productbox_*')) as $storage) {
+            exec(sprintf("rm -rf %s", escapeshellarg($storage)));
+        }
+
+        // delete tenant uploads
+        exec(sprintf("rm -rf %s", escapeshellarg(base_path('public/uploads/' . md5(tenant()->id)))));
+
+        parent::tearDown();
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Manage\AuthController;
+use App\Http\Controllers\Api\Manage\ItemsController;
 use App\Http\Controllers\Api\Manage\CategoriesController;
 
 /*
@@ -30,4 +31,9 @@ Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
     Route::post('categories', [CategoriesController::class, 'store'])->name('categories.store');
     Route::patch('categories/{category}', [CategoriesController::class, 'update'])->name('categories.update');
     Route::delete('categories/{category}', [CategoriesController::class, 'destroy'])->name('categories.destroy');
+
+    Route::get('items', [ItemsController::class, 'index'])->name('items');
+    Route::post('items', [ItemsController::class, 'store'])->name('items.store');
+    Route::patch('items/{item}', [ItemsController::class, 'update'])->name('items.update');
+    Route::delete('items/{item}', [ItemsController::class, 'destroy'])->name('items.destroy');
 });
