@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\Manage\ItemsController;
 use App\Http\Controllers\Api\Manage\OptionsController;
 use App\Http\Controllers\Api\Manage\VariantsController;
 use App\Http\Controllers\Api\Manage\CategoriesController;
+use App\Http\Controllers\Api\Manage\ResetPasswordController;
+use App\Http\Controllers\Api\Manage\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +22,8 @@ use App\Http\Controllers\Api\Manage\CategoriesController;
 
 Route::name('auth.')->group(function () {
     Route::post('login', [AuthController::class, 'store'])->name('login');
-    // Route::post('password/forgot', [ForgotPasswordController::class, 'store'])->name('forgot.password');
-    // Route::post('password/reset', [ResetPasswordController::class, 'store'])->name('reset.password');
+    Route::post('password/forgot', [ForgotPasswordController::class, 'store'])->name('forgot.password');
+    Route::post('password/reset', [ResetPasswordController::class, 'store'])->name('reset.password');
 
     Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
         Route::delete('logout', [AuthController::class, 'delete'])->name('logout');
