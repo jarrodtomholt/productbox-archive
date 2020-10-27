@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Manage;
 use App\Models\Item;
 use App\Models\Option;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ItemResource;
 use App\Http\Requests\Manage\OptionRequest;
-use App\Http\Resources\Manage\ItemResource;
 
 class OptionsController extends Controller
 {

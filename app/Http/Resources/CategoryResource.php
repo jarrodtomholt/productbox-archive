@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Manage;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VariantResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +17,10 @@ class VariantResource extends JsonResource
         return [
             'name' => $this->name,
             'slug' => $this->slug,
-            'price' => number_format($this->price / 100, 2),
+            'description' => $this->description,
+            'items' => ItemResource::collection($this->items->reject(function ($item) {
+                return $item->available === false;
+            })),
         ];
     }
 }

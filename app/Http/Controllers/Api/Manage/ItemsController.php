@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Manage;
 
 use App\Models\Item;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ItemResource;
 use App\Http\Requests\Manage\ItemRequest;
-use App\Http\Resources\Manage\ItemResource;
 
 class ItemsController extends Controller
 {

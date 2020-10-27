@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Manage;
 use App\Models\Item;
 use App\Models\Variant;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Manage\ItemResource;
+use App\Http\Resources\ItemResource;
 use App\Http\Requests\Manage\VariantRequest;
 
 class VariantsController extends Controller

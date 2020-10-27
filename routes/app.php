@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,3 +13,5 @@ use Illuminate\Support\Facades\Route;
 | ensuring the tenant is active
 |
 */
+
+Route::get('categories', [CategoriesController::class, 'index'])->name('categories');

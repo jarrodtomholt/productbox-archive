@@ -29,6 +29,12 @@ class Item extends Model implements HasMedia
         'available' => 'boolean',
     ];
 
+    protected $with = [
+        'media',
+        'variants',
+        'options',
+    ];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

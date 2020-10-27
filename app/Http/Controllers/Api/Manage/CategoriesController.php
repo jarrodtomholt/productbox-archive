@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Manage;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Http\Requests\Manage\CategoryRequest;
-use App\Http\Resources\Manage\CategoryResource;
 
 class CategoriesController extends Controller
 {

@@ -18,6 +18,10 @@ class Category extends Model
         'description',
     ];
 
+    protected $with = [
+        'items',
+    ];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
