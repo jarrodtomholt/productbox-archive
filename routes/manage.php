@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Manage\AuthController;
 use App\Http\Controllers\Api\Manage\ItemsController;
+use App\Http\Controllers\Api\Manage\CouponController;
 use App\Http\Controllers\Api\Manage\OptionsController;
 use App\Http\Controllers\Api\Manage\VariantsController;
 use App\Http\Controllers\Api\Manage\CategoriesController;
@@ -48,4 +49,8 @@ Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
     Route::post('items/{item}/options', [OptionsController::class, 'store'])->name('options.store');
     Route::patch('items/{item}/options/{option}', [OptionsController::class, 'update'])->name('options.update');
     Route::delete('items/{item}/options/{option}', [OptionsController::class, 'destroy'])->name('options.destroy');
+
+    Route::post('coupons', [CouponController::class, 'store'])->name('coupons.store');
+    Route::patch('coupons/{coupon}', [CouponController::class, 'update'])->name('coupons.update');
+    Route::delete('coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
 });
