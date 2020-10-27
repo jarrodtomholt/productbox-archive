@@ -6,14 +6,16 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
+use Gloudemans\Shoppingcart\CanBeBought;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Item extends Model implements HasMedia
+class Item extends Model implements HasMedia, Buyable
 {
-    use HasSlug, HasFactory, InteractsWithMedia;
+    use CanBeBought, HasSlug, HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'category_id',
@@ -70,6 +72,37 @@ class Item extends Model implements HasMedia
     public function getImageAttribute()
     {
         return optional($this->getFirstMedia('image'))->getUrl();
+    }
+
+    public function getBuyableIdentifier($selections = null)
+    {
+        return $this->slug;
+    }
+
+    public function getBuyableDescription($selections = null)
+    {
+        return $this->name;
+    }
+
+    public function getBuyablePrice($selections = null)
+    {
+        if (!$selections) {
+            return floatval(number_format($this->price / 100, 2));
+        }
+
+        $price = $this->price;
+        $selections = collect($selections);
+
+        if ($selections->has('variant')) {
+            $price = $this->variants->where('slug', $selections->get('variant'))->first()->price;
+        }
+
+        if ($selections->has('options')) {
+            $options = collect($selections->get('options'));
+            $price += $this->options->whereIn('slug', $options->flatten())->sum('price');
+        }
+
+        return floatval(number_format($price / 100, 2));
     }
 
     public function setImage($image)
