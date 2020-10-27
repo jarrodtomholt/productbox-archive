@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\ClearCartController;
 use App\Http\Controllers\Api\CategoriesController;
 
@@ -23,3 +24,6 @@ Route::post('cart', [CartController::class, 'store'])->name('cart');
 Route::put('cart', [CartController::class, 'update'])->name('cart');
 Route::delete('cart', [CartController::class, 'destroy'])->name('cart');
 Route::delete('cart/clear', [ClearCartController::class, 'destroy'])->name('cart.clear');
+
+Route::post('coupon', [CouponController::class, 'store'])->name('coupon');
+Route::delete('coupon', [CouponController::class, 'destroy'])->name('coupon');
