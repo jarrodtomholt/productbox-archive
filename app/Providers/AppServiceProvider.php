@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Stripe\Stripe;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Stripe::setApiKey(config('services.stripe.secret'));
     }
 
     /**

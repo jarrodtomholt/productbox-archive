@@ -40,6 +40,7 @@ class TenantFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->numerify('04########'),
             'active' => false,
+            'stripe_connect_id' => $this->faker->numerify('STRIPE_CONNECT_ID_########'),
         ];
     }
 

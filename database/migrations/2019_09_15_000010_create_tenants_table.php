@@ -18,6 +18,7 @@ class CreateTenantsTable extends Migration
 
             $table->string('name');
             $table->string('slug');
+            $table->string('stripe_connect_id')->nullable();
             $table->string('abn', 11)->nullable();
             $table->string('email');
             $table->string('phone');

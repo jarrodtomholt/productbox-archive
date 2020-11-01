@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Laravel\Cashier\Billable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
@@ -12,7 +13,7 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasSlug, HasFactory, HasDatabase, HasDomains;
+    use Billable, HasSlug, HasFactory, HasDatabase, HasDomains;
 
     protected $casts = [
         'active' => 'boolean',
