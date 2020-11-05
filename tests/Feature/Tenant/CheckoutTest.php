@@ -47,8 +47,6 @@ class CheckoutTest extends TestCase
      */
     public function it_catches_stripe_exceptions_on_checkout($token)
     {
-        $this->withoutExceptionHandling();
-
         Cart::add(Item::factory()->available()->create());
 
         $customer = [
@@ -75,27 +73,26 @@ class CheckoutTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_an_order_when_stripe_charge__is_successful_at_checkout()
+    public function it_creates_an_order_when_stripe_charge_is_successful_at_checkout()
     {
         Cart::add(Item::factory()->available()->create());
 
-        $user = [
+        $customer = [
             'name' => 'Test Customer',
             'email' => 'test.customer@example.dev',
             'phone' => '1234567890',
-            'deliveryType' => 'pickup',
             'token' => 'tok_au',
         ];
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $user)
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $customer)
         ->assertSuccessful();
 
         $this->assertDatabaseHas('orders', [
-            'name' => 'Test Customer',
-            'email' => 'test.customer@example.dev',
-            'phone' => '1234567890',
-            'delivery_type' => 'pickup',
+            'name' => $customer['name'],
+            'email' => $customer['email'],
+            'phone' => $customer['phone'],
             'subtotal' => intval(Cart::priceTotal() * 100),
+            'coupon' => null,
             'total' => intval(Cart::total() * 100),
         ]);
     }
@@ -109,107 +106,27 @@ class CheckoutTest extends TestCase
 
         Cart::setGlobalDiscount($coupon->value);
 
+        // this sets the coupon in session per CouponController::class
         session(['coupon' => sprintf('%s - %s', $coupon->code, $coupon->description)]);
 
-        $user = [
+        $customer = [
             'name' => 'Test Customer',
             'email' => 'test.customer@example.dev',
             'phone' => '1234567890',
-            'deliveryType' => 'pickup',
             'token' => 'tok_au',
         ];
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $user)
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $customer)
         ->assertSuccessful();
 
         $this->assertDatabaseHas('orders', [
-            'name' => 'Test Customer',
-            'email' => 'test.customer@example.dev',
-            'phone' => '1234567890',
-            'delivery_type' => 'pickup',
+            'name' => $customer['name'],
+            'email' => $customer['email'],
+            'phone' => $customer['phone'],
             'subtotal' => intval(Cart::priceTotal() * 100),
             'discount' => intval(Cart::discount() * 100),
             'total' => intval(Cart::total() * 100),
             'coupon' => session()->get('coupon'),
         ]);
     }
-
-    // /** @test */
-    // public function it_rejects_a_delivery_request_to_checkout_when_delivery_not_enabled()
-    // {
-    //     Cart::add($item);
-
-    //     $user = array_merge(factory(User::class)->make()->toArray(), ['deliveryType' => 'delivery']);
-
-    //     $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $user)
-    //         ->assertStatus(422)
-    //         ->assertJsonValidationErrors('deliveryType');
-    // }
-
-    // /** @test */
-    // public function it_validates_address_on_checkout()
-    // {
-    //     $account = factory(Account::class)->create();
-
-    //     $item = $account->fresh()->tenant()->run(function () {
-    //         Settings::set('deliveryEnabled', true);
-
-    //         return factory(Item::class)->create();
-    //     });
-    //     Cart::add($item);
-
-    //     $user = array_merge(factory(User::class)->make()->toArray(), ['deliveryType' => 'delivery']);
-
-    //     $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $user)
-    //         ->assertStatus(422)
-    //         ->assertJsonValidationErrors('address')
-    //         ->assertJsonValidationErrors('city')
-    //         ->assertJsonValidationErrors('state')
-    //         ->assertJsonValidationErrors('postcode');
-    // }
-
-    // /** @test */
-    // public function it_adds_delivery_charge_at_checkout()
-    // {
-    //     $account = factory(Account::class)->create();
-
-    //     $item = $account->fresh()->tenant()->run(function () {
-    //         Settings::set([
-    //             'deliveryEnabled' => true,
-    //             'deliveryCharge' => 8.5
-    //         ]);
-
-    //         return factory(Item::class)->create();
-    //     });
-    //     Cart::add($item);
-
-    //     $user = [
-    //         'name' => 'Test Customer',
-    //         'email' => 'test.customer@example.dev',
-    //         'phone' => '1234567890',
-    //         'address' => '1 fake street',
-    //         'city' => 'Somewhere',
-    //         'state' => 'VIC',
-    //         'postcode' => '1234',
-    //         'deliveryType' => 'delivery',
-    //         'token' => 'tok_au',
-    //     ];
-
-    //     $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $user)->assertSuccessful();
-    //     $this->assertDatabaseHas('orders', [
-    //         'name' => $user['name'],
-    //         'email' => $user['email'],
-    //         'phone' => $user['phone'],
-    //         'delivery_type' => 'delivery',
-    //         'address' => $user['address'],
-    //         'city' => $user['city'],
-    //         'state' => $user['state'],
-    //         'postcode' => $user['postcode'],
-    //         'subtotal' => intval(Cart::priceTotal() * 100),
-    //         'discount' => intval(Cart::discount() * 100),
-    //         'total' => intval(Cart::total() * 100),
-    //         'delivery_fee' => intval(8.5 * 100),
-    //         'coupon' => session()->get('coupon'),
-    //     ]);
-    // }
 }

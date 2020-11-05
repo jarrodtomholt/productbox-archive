@@ -49,7 +49,6 @@ class CheckoutController extends Controller
             'city' => $request->city,
             'state' => $request->state,
             'postcode' => $request->postcode,
-            'delivery_type' => $request->deliveryType,
             'items' => Cart::content(),
             'coupon' => session()->get('coupon'),
             'subtotal' => Cart::priceTotal(),

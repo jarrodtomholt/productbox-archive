@@ -17,7 +17,6 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('number')->index();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('delivery_type');
             $table->string('name');
             $table->string('email');
             $table->string('phone');

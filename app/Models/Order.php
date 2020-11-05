@@ -20,7 +20,6 @@ class Order extends Model
         'city',
         'state',
         'postcode',
-        'delivery_type',
         'items',
         'coupon',
         'subtotal',
