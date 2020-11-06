@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Foundation\Http\FormRequest;
+use JarrodTomholt\Settings\Facades\Settings;
 
 class CheckoutRequest extends FormRequest
 {
@@ -24,10 +25,13 @@ class CheckoutRequest extends FormRequest
      */
     public function rules()
     {
+        $validDeliveryTypes = Settings::get('deliveryEnabled') ? 'pickup,delivery' : 'pickup';
+
         return [
             'name' => ['required'],
             'email' => ['required', 'email:rfc,filter'],
             'phone' => ['required', 'min:6', 'max:10'],
+            'deliveryType' => ['required', "in:{$validDeliveryTypes}"],
             'address' => ['required_if:deliveryType,delivery'],
             'city' => ['required_if:deliveryType,delivery'],
             'state' => ['required_if:deliveryType,delivery'],

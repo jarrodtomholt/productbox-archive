@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Item;
 use App\Models\Coupon;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use JarrodTomholt\Settings\Facades\Settings;
 
 class CheckoutTest extends TestCase
 {
@@ -49,7 +50,7 @@ class CheckoutTest extends TestCase
     {
         Cart::add(Item::factory()->available()->create());
 
-        $customer = [
+        $request = [
             'name' => 'Test Customer',
             'email' => 'test.customer@example.dev',
             'phone' => '1234567890',
@@ -57,7 +58,7 @@ class CheckoutTest extends TestCase
             'token' => $token,
         ];
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $customer)
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $request)
         ->assertStatus(422);
     }
 
@@ -77,20 +78,21 @@ class CheckoutTest extends TestCase
     {
         Cart::add(Item::factory()->available()->create());
 
-        $customer = [
+        $request = [
             'name' => 'Test Customer',
             'email' => 'test.customer@example.dev',
             'phone' => '1234567890',
             'token' => 'tok_au',
+            'deliveryType' => 'pickup',
         ];
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $customer)
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $request)
         ->assertSuccessful();
 
         $this->assertDatabaseHas('orders', [
-            'name' => $customer['name'],
-            'email' => $customer['email'],
-            'phone' => $customer['phone'],
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
             'subtotal' => intval(Cart::priceTotal() * 100),
             'coupon' => null,
             'total' => intval(Cart::total() * 100),
@@ -109,24 +111,108 @@ class CheckoutTest extends TestCase
         // this sets the coupon in session per CouponController::class
         session(['coupon' => sprintf('%s - %s', $coupon->code, $coupon->description)]);
 
-        $customer = [
+        $request = [
             'name' => 'Test Customer',
             'email' => 'test.customer@example.dev',
             'phone' => '1234567890',
             'token' => 'tok_au',
+            'deliveryType' => 'pickup',
         ];
 
-        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $customer)
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $request)
         ->assertSuccessful();
 
         $this->assertDatabaseHas('orders', [
-            'name' => $customer['name'],
-            'email' => $customer['email'],
-            'phone' => $customer['phone'],
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
             'subtotal' => intval(Cart::priceTotal() * 100),
             'discount' => intval(Cart::discount() * 100),
             'total' => intval(Cart::total() * 100),
             'coupon' => session()->get('coupon'),
+        ]);
+    }
+
+    /** @test */
+    public function it_rejects_a_delivery_request_to_checkout_when_delivery_not_enabled()
+    {
+        Settings::set('deliveryEnabled', false);
+
+        Cart::add(Item::factory()->available()->create());
+
+        $request = [
+            'name' => 'Test Customer',
+            'email' => 'test.customer@example.dev',
+            'phone' => '1234567890',
+            'token' => 'tok_au',
+            'deliveryType' => 'delivery',
+        ];
+
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $request)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('deliveryType');
+    }
+
+    /** @test */
+    public function it_validates_address_on_checkout_when_deliveryType_is_set_to_delivery()
+    {
+        Settings::set('deliveryEnabled', true);
+
+        Cart::add(Item::factory()->available()->create());
+
+        $request = [
+            'name' => 'Test Customer',
+            'email' => 'test.customer@example.dev',
+            'phone' => '1234567890',
+            'token' => 'tok_au',
+            'deliveryType' => 'delivery',
+        ];
+
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $request)
+            ->assertStatus(422)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('address')
+            ->assertJsonValidationErrors('city')
+            ->assertJsonValidationErrors('state')
+            ->assertJsonValidationErrors('postcode');
+    }
+
+    /** @test */
+    public function it_adds_delivery_fee_at_checkout_when_deliveryType_is_set_to_deliver()
+    {
+        Settings::set([
+            'deliveryEnabled' => true,
+            'deliveryCharge' => 8.5,
+        ]);
+
+        Cart::add(Item::factory()->available()->create());
+
+        $request = [
+            'name' => 'Test Customer',
+            'email' => 'test.customer@example.dev',
+            'phone' => '1234567890',
+            'address' => '1 fake street',
+            'city' => 'Somewhere',
+            'state' => 'VIC',
+            'postcode' => '1234',
+            'deliveryType' => 'delivery',
+            'token' => 'tok_au',
+        ];
+
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $request)
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas('orders', [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'delivery_type' => 'delivery',
+            'address' => $request['address'],
+            'city' => $request['city'],
+            'state' => $request['state'],
+            'postcode' => $request['postcode'],
+            'total' => intval(Cart::total() * 100),
+            'delivery_fee' => intval(8.5 * 100),
         ]);
     }
 }

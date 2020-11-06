@@ -11,6 +11,7 @@ use App\Http\Requests\CheckoutRequest;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\RateLimitException;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use JarrodTomholt\Settings\Facades\Settings;
 use Stripe\Exception\ApiConnectionException;
 use App\Http\Resources\CheckoutOrderResource;
 use Stripe\Exception\InvalidRequestException;
@@ -25,7 +26,7 @@ class CheckoutController extends Controller
 
         try {
             $transaction = Charge::create([
-                'amount' => intval(Cart::total() * 100),
+                'amount' => intval(Cart::total() * 100) + $this->getDeliveryCharge($request->deliveryType),
                 'currency' => 'AUD',
                 'source' => $request->token,
             ], [
@@ -44,6 +45,7 @@ class CheckoutController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'delivery_type' => $request->deliveryType,
             'address' => $request->address,
             'address2' => $request->address2,
             'city' => $request->city,
@@ -54,7 +56,7 @@ class CheckoutController extends Controller
             'subtotal' => Cart::priceTotal(),
             'discount' => Cart::discount(),
             'total' => Cart::total(),
-            'delivery_fee' => null,
+            'delivery_fee' => $this->getDeliveryCharge($request->deliveryType),
             'paid' => $transaction->paid,
             'transaction_id' => $transaction->id,
             'transaction_source' => $transaction->source,
@@ -62,5 +64,10 @@ class CheckoutController extends Controller
         ]);
 
         return new CheckoutOrderResource($order);
+    }
+
+    private function getDeliveryCharge($deliveryType): ?int
+    {
+        return $deliveryType === 'delivery' ? intval(Settings::get('deliveryCharge') * 100) : null;
     }
 }

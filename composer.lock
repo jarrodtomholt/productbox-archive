@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5ff7fc0ef13e129f47706b6f050ae4d",
+    "content-hash": "34228d0eb09258e50a78139b85f878ce",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1152,6 +1152,78 @@
                 "source": "https://github.com/Intervention/image/tree/master"
             },
             "time": "2019-11-02T09:15:47+00:00"
+        },
+        {
+            "name": "jarrodtomholt/laravel-settings",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jarrodtomholt/laravel-settings.git",
+                "reference": "c501384f26aa74c1af63b33453347d9b5c110f05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jarrodtomholt/laravel-settings/zipball/c501384f26aa74c1af63b33453347d9b5c110f05",
+                "reference": "c501384f26aa74c1af63b33453347d9b5c110f05",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^7.0|^8.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "^1.9",
+                "orchestra/testbench": "3.8.*|4.*|5.*",
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JarrodTomholt\\Settings\\SettingsServiceProvider"
+                    ],
+                    "aliases": {
+                        "Settings": "JarrodTomholt\\Settings\\Facades\\Settings"
+                    }
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/migrations"
+                ],
+                "psr-4": {
+                    "JarrodTomholt\\Settings\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jarrod Tomholt",
+                    "email": "jarrodtomholt@gmail.com"
+                }
+            ],
+            "description": "laravel key => value storage with encryption support",
+            "keywords": [
+                "Key value",
+                "Settings",
+                "encrypt",
+                "encrypted",
+                "key-value",
+                "laravel",
+                "persistent",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/jarrodtomholt/laravel-settings/issues",
+                "source": "https://github.com/jarrodtomholt/laravel-settings/tree/1.1"
+            },
+            "time": "2020-11-06T09:35:23+00:00"
         },
         {
             "name": "laravel/cashier",
