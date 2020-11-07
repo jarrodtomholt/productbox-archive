@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Manage;
 
+use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdminResource extends JsonResource
@@ -17,7 +18,7 @@ class AdminResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
-            'token' => $this->currentAccessToken() ?? $this->createToken('token', [
+            'token' => $this->currentAccessToken() ?? $this->createToken(Agent::device(), [
                 sprintf('manage:%s', tenant('id')),
             ])->plainTextToken,
         ];

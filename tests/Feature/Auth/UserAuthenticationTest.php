@@ -5,9 +5,12 @@ namespace Tests\Feature\Auth;
 use Tests\TestCase;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserAuthenticationTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      * @dataProvider loginValidationProvider

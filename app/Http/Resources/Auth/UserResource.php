@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Auth;
 
+use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -18,7 +19,7 @@ class UserResource extends JsonResource
             // 'name' => $this->fullName,
             'email' => $this->email,
             'phone' => $this->phone,
-            'token' => $this->currentAccessToken() ?? $this->createToken('token')->plainTextToken,
+            'token' => $this->currentAccessToken() ?? $this->createToken(Agent::device())->plainTextToken,
             // 'addresses' => AddressResource::collection($this->addresses),
         ];
     }

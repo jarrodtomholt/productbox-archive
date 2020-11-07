@@ -6,11 +6,12 @@ use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Notifications\Auth\ResetPasswordNotification;
 
 class ForgotPasswordTest extends TestCase
 {
-    use WithFaker;
+    use RefreshDatabase, WithFaker;
 
     /** @test */
     public function it_validates_an_email_for_a_forgotten_password_request()

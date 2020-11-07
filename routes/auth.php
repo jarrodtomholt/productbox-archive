@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\DevicesController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 
@@ -10,4 +11,6 @@ Route::post('password/reset', [ResetPasswordController::class, 'store'])->name('
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('logout', [AuthController::class, 'delete'])->name('logout');
+
+    Route::post('devices', [DevicesController::class, 'store'])->name('device');
 });
