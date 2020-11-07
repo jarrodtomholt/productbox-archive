@@ -18,6 +18,7 @@ return [
      */
     'central_domains' => [
         'productbox.test',
+        'auth.productbox.test',
     ],
 
     /**

@@ -36,7 +36,9 @@ abstract class TestCase extends BaseTestCase
         }
 
         // delete tenant uploads
-        exec(sprintf("rm -rf %s", escapeshellarg(base_path('public/uploads/' . md5(tenant()->id)))));
+        if (tenant()) {
+            exec(sprintf("rm -rf %s", escapeshellarg(base_path('public/uploads/' . md5(tenant()->id)))));
+        }
 
         parent::tearDown();
     }
