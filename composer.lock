@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d62bf7a5be3eebc637565790eeb097bf",
+    "content-hash": "66356ec69fc38f97236b2dff928bd113",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1292,78 +1292,6 @@
                 "source": "https://github.com/Intervention/image/tree/master"
             },
             "time": "2019-11-02T09:15:47+00:00"
-        },
-        {
-            "name": "jarrodtomholt/laravel-settings",
-            "version": "1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jarrodtomholt/laravel-settings.git",
-                "reference": "c501384f26aa74c1af63b33453347d9b5c110f05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jarrodtomholt/laravel-settings/zipball/c501384f26aa74c1af63b33453347d9b5c110f05",
-                "reference": "c501384f26aa74c1af63b33453347d9b5c110f05",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^7.0|^8.0",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "fzaninotto/faker": "^1.9",
-                "orchestra/testbench": "3.8.*|4.*|5.*",
-                "phpunit/phpunit": "^8.5"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "JarrodTomholt\\Settings\\SettingsServiceProvider"
-                    ],
-                    "aliases": {
-                        "Settings": "JarrodTomholt\\Settings\\Facades\\Settings"
-                    }
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/migrations"
-                ],
-                "psr-4": {
-                    "JarrodTomholt\\Settings\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jarrod Tomholt",
-                    "email": "jarrodtomholt@gmail.com"
-                }
-            ],
-            "description": "laravel key => value storage with encryption support",
-            "keywords": [
-                "Key value",
-                "Settings",
-                "encrypt",
-                "encrypted",
-                "key-value",
-                "laravel",
-                "persistent",
-                "storage"
-            ],
-            "support": {
-                "issues": "https://github.com/jarrodtomholt/laravel-settings/issues",
-                "source": "https://github.com/jarrodtomholt/laravel-settings/tree/1.1"
-            },
-            "time": "2020-11-06T09:35:23+00:00"
         },
         {
             "name": "jaybizzle/crawler-detect",
@@ -4056,6 +3984,60 @@
                 }
             ],
             "time": "2020-10-28T12:03:25+00:00"
+        },
+        {
+            "name": "spatie/opening-hours",
+            "version": "2.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/opening-hours.git",
+                "reference": "51ebd2e5f09938a88f9bb8f22d7cbaea8e0b161f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/opening-hours/zipball/51ebd2e5f09938a88f9bb8f22d7cbaea8e0b161f",
+                "reference": "51ebd2e5f09938a88f9bb8f22d7cbaea8e0b161f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "kylekatarnls/multi-tester": "^1.1",
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\OpeningHours\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A helper to query and format a set of opening hours",
+            "homepage": "https://github.com/spatie/opening-hours",
+            "keywords": [
+                "hours",
+                "opening",
+                "opening-hours",
+                "schedule",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/opening-hours/issues",
+                "source": "https://github.com/spatie/opening-hours/tree/2.10.0"
+            },
+            "time": "2020-11-06T16:56:21+00:00"
         },
         {
             "name": "spatie/temporary-directory",

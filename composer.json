@@ -13,7 +13,6 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "jarrodtomholt/laravel-settings": "^1.1",
         "jenssegers/agent": "^2.6",
         "laravel/cashier": "^12.4",
         "laravel/framework": "^8.0",
@@ -24,6 +23,7 @@
         "predis/predis": "^1.1",
         "spatie/laravel-medialibrary": "^8.0.0",
         "spatie/laravel-sluggable": "^2.5",
+        "spatie/opening-hours": "^2.10",
         "stancl/tenancy": "^3.2",
         "vinkla/hashids": "^9.0"
     },

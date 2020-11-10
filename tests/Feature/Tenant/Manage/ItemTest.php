@@ -17,11 +17,7 @@ class ItemTest extends TestCase
     {
         parent::setUp();
 
-        $admin = $this->tenant->run(function () {
-            return Admin::factory()->create();
-        });
-
-        Sanctum::actingAs($admin, [sprintf('manage:%s', $this->tenant->id)], 'admin');
+        Sanctum::actingAs(Admin::factory()->create(), [sprintf('manage:%s', $this->tenant->id)], 'admin');
     }
 
     /** @test */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Stripe\Charge;
 use App\Models\Order;
+use App\Facades\Settings;
 use Illuminate\Support\Facades\Log;
 use Stripe\Exception\CardException;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,6 @@ use App\Http\Requests\CheckoutRequest;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\RateLimitException;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use JarrodTomholt\Settings\Facades\Settings;
 use Stripe\Exception\ApiConnectionException;
 use App\Http\Resources\CheckoutOrderResource;
 use Stripe\Exception\InvalidRequestException;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Facades\Settings;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Foundation\Http\FormRequest;
-use JarrodTomholt\Settings\Facades\Settings;
 
 class CheckoutRequest extends FormRequest
 {

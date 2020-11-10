@@ -40,6 +40,12 @@ abstract class TestCase extends BaseTestCase
             exec(sprintf("rm -rf %s", escapeshellarg(base_path('public/uploads/' . md5(tenant()->id)))));
         }
 
+        /* HANDY - if mysql is set or used for some reason
+            SELECT CONCAT('DROP DATABASE `', SCHEMA_NAME, '`;')
+            FROM `information_schema`.`SCHEMATA`
+            WHERE SCHEMA_NAME LIKE 'productbox_%';
+        */
+
         parent::tearDown();
     }
 }

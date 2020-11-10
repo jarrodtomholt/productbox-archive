@@ -5,8 +5,8 @@ namespace Tests\Feature\Tenant;
 use Tests\TestCase;
 use App\Models\Item;
 use App\Models\Coupon;
+use App\Facades\Settings;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use JarrodTomholt\Settings\Facades\Settings;
 
 class CheckoutTest extends TestCase
 {

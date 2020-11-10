@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Manage\AuthController;
 use App\Http\Controllers\Api\Manage\ItemsController;
 use App\Http\Controllers\Api\Manage\CouponController;
 use App\Http\Controllers\Api\Manage\OptionsController;
+use App\Http\Controllers\Api\Manage\SettingsController;
 use App\Http\Controllers\Api\Manage\VariantsController;
 use App\Http\Controllers\Api\Manage\CategoriesController;
 use App\Http\Controllers\Api\Manage\Auth\DevicesController;
@@ -53,4 +54,7 @@ Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
     Route::post('coupons', [CouponController::class, 'store'])->name('coupons.store');
     Route::patch('coupons/{coupon}', [CouponController::class, 'update'])->name('coupons.update');
     Route::delete('coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
+
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings');
+    Route::post('settings', [SettingsController::class, 'store'])->name('settings');
 });
