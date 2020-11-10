@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Auth\UserResource;
 use App\Http\Requests\Auth\AddressRequest;
 
-class UserAddressController extends Controller
+class AddressController extends Controller
 {
     public function store(AddressRequest $request)
     {

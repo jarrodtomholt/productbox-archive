@@ -9,7 +9,7 @@ use Laravel\Sanctum\Sanctum;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UserAddressTest extends TestCase
+class AddressTest extends TestCase
 {
     use RefreshDatabase;
 

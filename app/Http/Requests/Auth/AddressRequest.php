@@ -27,8 +27,8 @@ class AddressRequest extends FormRequest
             'address' => 'required',
             'address2' => 'sometimes',
             'city' => 'required',
-            'state' => 'required|in:VIC,NSW,QLD,SA,WA,TAS,ACT,NT',
-            'postcode' => 'required|digits:4',
+            'state' => ['required', 'in:VIC,NSW,QLD,SA,WA,TAS,ACT,NT'],
+            'postcode' => ['required', 'digits:4'],
         ];
     }
 }

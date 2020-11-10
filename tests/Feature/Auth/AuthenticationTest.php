@@ -7,7 +7,7 @@ use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UserAuthenticationTest extends TestCase
+class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
