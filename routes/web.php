@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\SiteController;
+use App\Http\Controllers\Site\StripeConnectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,4 @@ Route::get('/', function () {
 });
 
 Route::post('/', [SiteController::class, 'store'])->name('signup');
+Route::get('{tenant:slug}/stripe/connect', [StripeConnectController::class, 'index'])->name('stripe.attempt');
