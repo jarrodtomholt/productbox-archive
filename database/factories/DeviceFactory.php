@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Device;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,7 +23,6 @@ class DeviceFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(),
             'token' => (string) Str::uuid(),
             'device_id' => (string) Str::uuid(),
             'app_version' => '0.0.1',

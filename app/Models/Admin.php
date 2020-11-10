@@ -29,6 +29,11 @@ class Admin extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
+    public function devices()
+    {
+        return $this->morphMany(Device::class, 'user');
+    }
+
     /**
     * Send the password reset notification.
     *

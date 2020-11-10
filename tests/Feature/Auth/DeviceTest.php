@@ -46,7 +46,7 @@ class DeviceTest extends TestCase
             'app_version' => '0.0.1',
         ]);
 
-        $this->assertEquals(1, User::with('devices')->first()->devices->count());
+        $this->assertEquals(1, auth()->user()->devices()->count());
     }
 
     /** @test */
@@ -54,11 +54,10 @@ class DeviceTest extends TestCase
     {
         $user = User::factory()->create();
 
-        Device::factory()->create([
-            'user_id' => $user,
+        $user->devices()->create(Device::factory()->make([
             'token' => $this->device['token'],
             'device_id' => $this->device['deviceId'],
-        ]);
+        ])->toArray());
 
         Sanctum::actingAs($user);
 
@@ -67,7 +66,7 @@ class DeviceTest extends TestCase
             'deviceId' => $this->device['deviceId'],
         ]);
 
-        $this->assertEquals(1, User::first()->devices()->count());
+        $this->assertEquals(1, $user->fresh()->devices()->count());
     }
 
     /** @test */

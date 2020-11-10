@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api\Manage\Auth;
 
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ class DevicesController extends Controller
 {
     public function store(Request $request, Agent $agent)
     {
-        if (!$request->token || auth()->check() === false) {
+        if (!$request->token) {
             return response()->noContent();
         }
 

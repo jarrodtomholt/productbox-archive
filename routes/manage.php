@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Manage\CouponController;
 use App\Http\Controllers\Api\Manage\OptionsController;
 use App\Http\Controllers\Api\Manage\VariantsController;
 use App\Http\Controllers\Api\Manage\CategoriesController;
+use App\Http\Controllers\Api\Manage\Auth\DevicesController;
 use App\Http\Controllers\Api\Manage\ResetPasswordController;
 use App\Http\Controllers\Api\Manage\ForgotPasswordController;
 
@@ -25,13 +26,12 @@ Route::name('auth.')->group(function () {
     Route::post('login', [AuthController::class, 'store'])->name('login');
     Route::post('password/forgot', [ForgotPasswordController::class, 'store'])->name('forgot.password');
     Route::post('password/reset', [ResetPasswordController::class, 'store'])->name('reset.password');
-
-    Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
-        Route::delete('logout', [AuthController::class, 'delete'])->name('logout');
-    });
 });
 
 Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
+    Route::delete('logout', [AuthController::class, 'delete'])->name('auth.logout');
+    Route::post('devices', [DevicesController::class, 'store'])->name('auth.device');
+
     Route::get('categories', [CategoriesController::class, 'index'])->name('categories');
     Route::post('categories', [CategoriesController::class, 'store'])->name('categories.store');
     Route::patch('categories/{category}', [CategoriesController::class, 'update'])->name('categories.update');
