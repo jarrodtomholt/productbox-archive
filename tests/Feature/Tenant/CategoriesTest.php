@@ -13,8 +13,6 @@ class CategoriesTest extends TestCase
     /** @test */
     public function it_only_returns_items_that_are_available()
     {
-        $this->withoutExceptionHandling();
-
         $category = Category::factory()->create();
 
         $availableItems = Item::factory()->available()->count(rand(2, 5))->create([

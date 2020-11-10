@@ -39,6 +39,7 @@ class TenantFactory extends Factory
             'name' => $this->faker->company,
             'email' => $this->faker->unique()->safeEmail,
             'phone' => $this->faker->numerify('04########'),
+            'timezone' => 'Australia/Melbourne',
             'active' => false,
             'stripe_connect_id' => $this->faker->numerify('STRIPE_CONNECT_ID_########'),
         ];

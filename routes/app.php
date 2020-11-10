@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\ClearCartController;
 use App\Http\Controllers\Api\CategoriesController;
+use App\Http\Controllers\TenantFrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use App\Http\Controllers\Api\CategoriesController;
 | ensuring the tenant is active
 |
 */
+
+Route::get('/', [TenantFrontendController::class, 'index'])->name('frontend');
 
 Route::get('categories', [CategoriesController::class, 'index'])->name('categories');
 

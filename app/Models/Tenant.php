@@ -28,6 +28,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'abn',
             'email',
             'phone',
+            'timezone',
             'active',
         ];
     }

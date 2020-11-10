@@ -22,8 +22,8 @@ class CreateTenantsTable extends Migration
             $table->string('abn', 11)->nullable();
             $table->string('email');
             $table->string('phone');
+            $table->string('timezone')->default('Australia/Melbourne');
             $table->boolean('active')->default(false);
-            $table->json('settings')->nullable();
 
             $table->timestamps();
             $table->json('data')->nullable();
