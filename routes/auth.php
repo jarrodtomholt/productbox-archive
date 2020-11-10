@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\DevicesController;
+use App\Http\Controllers\Api\Auth\UserAddressController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 
@@ -13,4 +14,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('logout', [AuthController::class, 'delete'])->name('logout');
 
     Route::post('devices', [DevicesController::class, 'store'])->name('device');
+
+    Route::post('address', [UserAddressController::class, 'store'])->name('address');
+    Route::delete('address', [UserAddressController::class, 'destroy'])->name('address');
 });

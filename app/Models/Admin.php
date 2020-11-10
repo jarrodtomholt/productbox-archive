@@ -5,6 +5,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\Manage\ForgotPasswordNotification;
@@ -29,7 +30,7 @@ class Admin extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
-    public function devices()
+    public function devices(): ?MorphMany
     {
         return $this->morphMany(Device::class, 'user');
     }

@@ -5,7 +5,9 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Notifications\Auth\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -28,9 +30,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function devices()
+    protected $with = [
+        'addresses',
+    ];
+
+    public function devices(): ?MorphMany
     {
         return $this->morphMany(Device::class, 'user');
+    }
+
+    public function addresses(): ?HasMany
+    {
+        return $this->hasMany(Address::class);
     }
 
     public function setPasswordAttribute($value)

@@ -16,11 +16,11 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            // 'name' => $this->fullName,
+            'name' => $this->fullName,
             'email' => $this->email,
             'phone' => $this->phone,
             'token' => $this->currentAccessToken() ?? $this->createToken(Agent::device())->plainTextToken,
-            // 'addresses' => AddressResource::collection($this->addresses),
+            'addresses' => AddressResource::collection($this->addresses),
         ];
     }
 }
