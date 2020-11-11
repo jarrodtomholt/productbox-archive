@@ -41,6 +41,8 @@ class StripeConnectTest extends TestCase
             'code' => 'this-is-fake',
         ]);
 
+        // TODO - test the endpoint :)
+
         $tenant->update([
             'stripe_connect_id' => $stripeResponse->stripe_user_id,
         ]);
