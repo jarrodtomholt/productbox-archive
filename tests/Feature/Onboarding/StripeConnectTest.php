@@ -5,6 +5,7 @@ namespace Tests\Feature\Onboarding;
 use Stripe\OAuth;
 use Tests\TestCase;
 use App\Models\Tenant;
+use Illuminate\Support\Str;
 
 class StripeConnectTest extends TestCase
 {
@@ -29,6 +30,9 @@ class StripeConnectTest extends TestCase
 
         $tenant = Tenant::factory()->create();
 
+        $uuid = Str::uuid()->toString();
+        cache()->set($uuid, $tenant, now()->addMinutes(5));
+
         $mock = $this->mock(OAuth::class, function ($mock) use ($mockedStripeOAuthUserId) {
             $mock->shouldReceive('token')->once()->andReturn(
                 json_decode(json_encode(['stripe_user_id' => $mockedStripeOAuthUserId])),
@@ -36,17 +40,13 @@ class StripeConnectTest extends TestCase
             );
         });
 
-        $stripeResponse = $mock->token([
-            'grant_type' => 'authorization_code',
+        app()->instance(OAuth::class, $mock);
+
+        $this->get(route('stripe.connect', [
+            'state' => $uuid,
             'code' => 'this-is-fake',
-        ]);
+        ]));
 
-        // TODO - test the endpoint :)
-
-        $tenant->update([
-            'stripe_connect_id' => $stripeResponse->stripe_user_id,
-        ]);
-
-        $this->assertTrue($tenant->fresh()->stripe_connect_id === $mockedStripeOAuthUserId);
+        $this->assertTrue($tenant->stripe_connect_id === $mockedStripeOAuthUserId);
     }
 }

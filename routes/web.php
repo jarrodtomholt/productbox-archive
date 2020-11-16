@@ -28,4 +28,6 @@ Route::get('/', function () {
 });
 
 Route::post('/', [SiteController::class, 'store'])->name('signup');
+
+Route::get('stripe/connect', [StripeConnectController::class, 'store'])->name('stripe.connect');
 Route::get('{tenant:slug}/stripe/connect', [StripeConnectController::class, 'index'])->name('stripe.attempt');

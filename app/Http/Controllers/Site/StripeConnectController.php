@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use Stripe\OAuth;
 use App\Models\Tenant;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class StripeConnectController extends Controller
         $tenant = cache()->get($cacheKey);
 
         try {
-            $stripeResponse = OAuth::token([
+            $stripeResponse = resolve(OAuth::class)->token([
                 'grant_type' => 'authorization_code',
                 'code' => $stripeOauthToken,
             ]);
