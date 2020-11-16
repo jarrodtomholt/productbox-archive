@@ -46,13 +46,10 @@ class StripeConnectController extends Controller
                 'active' => true,
             ]);
 
-            // TODO - put this under test
             return redirect()
                 ->tenant_route($tenant->domains()->first()->domain, 'app.frontend')
                 ->withSuccess('Stripe payment gateway connected!');
         } catch (InvalidGrantException $e) {
-            Log::error($e->getMessage());
-        } catch (Exception $e) {
             Log::error($e->getMessage());
         }
 
