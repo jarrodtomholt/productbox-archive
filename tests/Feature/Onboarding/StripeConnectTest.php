@@ -33,14 +33,12 @@ class StripeConnectTest extends TestCase
         $uuid = Str::uuid()->toString();
         cache()->set($uuid, $tenant, now()->addMinutes(5));
 
-        $mock = $this->mock(OAuth::class, function ($mock) use ($mockedStripeOAuthUserId) {
+        $this->partialMock(OAuth::class, function ($mock) use ($mockedStripeOAuthUserId) {
             $mock->shouldReceive('token')->once()->andReturn(
                 json_decode(json_encode(['stripe_user_id' => $mockedStripeOAuthUserId])),
                 true
             );
         });
-
-        app()->instance(OAuth::class, $mock);
 
         $this->get(route('stripe.connect', [
             'state' => $uuid,

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site\SiteController;
+use App\Http\Controllers\Site\SetupController;
 use App\Http\Controllers\Site\StripeConnectController;
 
 /*
@@ -28,6 +29,9 @@ Route::get('/', function () {
 });
 
 Route::post('/', [SiteController::class, 'store'])->name('signup');
+
+Route::get('{tenant:slug}/setup', [SetupController::class, 'index'])->middleware('signed')->name('setup');
+Route::post('{tenant:slug}/setup', [SetupController::class, 'store'])->name('setup');
 
 Route::get('stripe/connect', [StripeConnectController::class, 'store'])->name('stripe.connect');
 Route::get('{tenant:slug}/stripe/connect', [StripeConnectController::class, 'index'])->name('stripe.attempt');

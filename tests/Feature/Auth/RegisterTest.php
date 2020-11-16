@@ -63,8 +63,6 @@ class RegisterTest extends TestCase
     /** @test */
     public function it_registers_a_user()
     {
-        $this->withoutExceptionHandling();
-
         $user = User::factory()->make();
 
         $this->postJson(route('auth.register'), array_merge($user->toArray(), [

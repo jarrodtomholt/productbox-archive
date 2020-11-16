@@ -9,7 +9,7 @@ class MediaPathGenerator implements PathGenerator
 {
     public function getPath(Media $media): string
     {
-        if (tenant()->id) {
+        if (tenant('id')) {
             return md5(tenant()->id) . '/images/';
         }
 

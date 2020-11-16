@@ -37,7 +37,8 @@ abstract class TestCase extends BaseTestCase
 
         // delete tenant uploads
         if (tenant()) {
-            exec(sprintf("rm -rf %s", escapeshellarg(base_path('public/uploads/' . md5(tenant()->id)))));
+            exec(sprintf("rm -rf %s", escapeshellarg(base_path('public/uploads/' . md5(tenant('id'))))));
+            exec(sprintf("rm -rf %s", escapeshellarg(base_path('public/uploads/logos/' . tenant('slug') . '.png'))));
         }
 
         /* HANDY - if mysql is set or used for some reason
@@ -45,6 +46,8 @@ abstract class TestCase extends BaseTestCase
             FROM `information_schema`.`SCHEMATA`
             WHERE SCHEMA_NAME LIKE 'productbox_%';
         */
+
+        tenancy()->end();
 
         parent::tearDown();
     }
