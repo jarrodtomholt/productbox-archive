@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Tenant;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SetupTest extends TestCase
@@ -92,11 +93,7 @@ class SetupTest extends TestCase
             ],
         ])->assertRedirect();
 
-        $this->assertFileExists(sprintf(
-            '%s/logos/%s',
-            config('filesystems.disks.uploads.root'),
-            $tenant->slug . '.png'
-        ));
+        Storage::disk('uploads')->assertExists('logos/' . $tenant->slug . '.png');
 
         tenancy()->initialize($tenant->fresh());
 

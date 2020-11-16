@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\Tenant;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -16,6 +17,8 @@ abstract class TestCase extends BaseTestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        Storage::fake('uploads');
 
         if ($this->tenancy) {
             $this->tenant = Tenant::factory()->active()->create();

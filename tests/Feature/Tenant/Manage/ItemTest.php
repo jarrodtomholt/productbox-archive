@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Category;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ItemTest extends TestCase
 {
@@ -87,9 +88,8 @@ class ItemTest extends TestCase
 
         $item = Item::first();
 
-        $this->assertFileExists(sprintf(
-            '%s/%s/images/%s',
-            config('filesystems.disks.uploads.root'),
+        Storage::disk('uploads')->assertExists(sprintf(
+            '%s/images/%s',
             md5(tenant()->id),
             $item->slug . '.png'
         ));
@@ -144,11 +144,10 @@ class ItemTest extends TestCase
             'image' => UploadedFile::fake()->image('updated-item-image.png'),
         ]);
 
-        $this->assertFileExists(sprintf(
-            '%s/%s/images/%s',
-            config('filesystems.disks.uploads.root'),
+        Storage::disk('uploads')->assertExists(sprintf(
+            '%s/images/%s',
             md5(tenant()->id),
-            $item->fresh()->slug . '.png'
+            $item->slug . '.png'
         ));
     }
 
