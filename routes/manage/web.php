@@ -1,18 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
-| Tenant Routes
+| Tenant Manage Web Routes
 |--------------------------------------------------------------------------
 |
-| Tenant routes are prefixed with 'tenant.'
+| routes are prefixed with 'manage.'
 | and include necessary route middleware such as identifying tenants and
 | ensuring the tenant is active
 |
 */
 
-Route::get('/', function () {
-    return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
-})->name('home');
+Route::get('/manage/{any?}', function () {
+})->where('any', '.*')->name('main');

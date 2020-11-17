@@ -58,8 +58,3 @@ Route::middleware(['auth:admin', 'manage.tenant'])->group(function () {
     Route::get('settings', [SettingsController::class, 'index'])->name('settings');
     Route::post('settings', [SettingsController::class, 'store'])->name('settings');
 });
-
-
-Route::get('/manage/{any?}', function () {
-    dd('manage home');
-})->where('any', '.*')->name('main');

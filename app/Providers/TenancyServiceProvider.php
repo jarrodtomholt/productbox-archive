@@ -123,15 +123,15 @@ class TenancyServiceProvider extends ServiceProvider
             InitializeTenancyByDomain::class,
             PreventAccessFromCentralDomains::class,
             'tenant.active',
-        ])
-        ->group(function () {
-            Route::middleware('web')
-                ->namespace('App\Http\Controllers')
-                ->group(base_path('routes/tenant.php'));
-
+        ])->group(function () {
             Route::middleware('api')->group(function () {
-                Route::prefix('api')->name('app.')->group(base_path('routes/app.php'));
-                Route::prefix('manage/api')->name('manage.')->group(base_path('routes/manage.php'));
+                Route::prefix('api')->name('app.')->group(base_path('routes/app/api.php'));
+                Route::prefix('manage/api')->name('manage.')->group(base_path('routes/manage/api.php'));
+            });
+
+            Route::middleware('web')->group(function () {
+                Route::name('app.')->group(base_path('routes/app/web.php'));
+                Route::name('manage.')->group(base_path('routes/manage/web.php'));
             });
         });
     }
