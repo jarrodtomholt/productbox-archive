@@ -48,11 +48,9 @@ class AddressTest extends TestCase
         $response = $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => 'secret',
-        ]);
-
-        $response->assertSee($user->fullname)
-            ->assertSee($user->email)
-            ->assertSee($user->phone);
+        ])->assertSee($user->fullname)
+        ->assertSee($user->email)
+        ->assertSee($user->phone);
 
         $user->addresses->each(function ($address) use ($response) {
             $response->assertSee($address->address)

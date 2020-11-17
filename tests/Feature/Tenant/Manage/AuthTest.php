@@ -4,7 +4,6 @@ namespace Tests\Feature\Tenant\Manage;
 
 use Tests\TestCase;
 use App\Models\Admin;
-use App\Models\Tenant;
 use Laravel\Sanctum\Sanctum;
 
 class AuthTest extends TestCase
@@ -47,23 +46,18 @@ class AuthTest extends TestCase
     /** @test */
     public function it_fails_to_login_with_incorrect_password()
     {
-        $admin = $this->tenant->fresh()->run(function () {
-            return Admin::factory()->create(['password' => 'secret']);
-        });
+        $admin = Admin::factory()->create(['password' => 'secret']);
 
         $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.login'), [
             'email' => $admin->email,
             'password' => 'not-a-secret-password',
-        ])
-        ->assertStatus(422);
+        ])->assertStatus(422);
     }
 
     /** @test */
     public function it_allows_an_admin_to_login()
     {
-        $admin = $this->tenant->fresh()->run(function () {
-            return Admin::factory()->create(['password' => 'secret']);
-        });
+        $admin = Admin::factory()->create(['password' => 'secret']);
 
         $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.login'), [
             'email' => $admin->email,
@@ -82,28 +76,11 @@ class AuthTest extends TestCase
     /** @test */
     public function authenticated_users_can_logout()
     {
-        $admin = $this->tenant->fresh()->run(function () {
-            return Admin::factory()->create(['password' => 'secret']);
-        });
+        $admin = Admin::factory()->create(['password' => 'secret']);
 
         Sanctum::actingAs($admin, [sprintf('manage:%s', $this->tenant->id)], 'admin');
 
         $this->deleteJson(tenant_route($this->tenant->domains()->first()->domain, 'manage.auth.logout'))
         ->assertSuccessful();
-    }
-
-    /** @test */
-    public function admin_from_another_tenant_cant_manage_other_tenants()
-    {
-        $tenant2 = Tenant::factory()->active()->create();
-
-        $admin = $this->tenant->fresh()->run(function () {
-            return Admin::factory()->create();
-        });
-
-        Sanctum::actingAs($admin, [sprintf('manage:%s', $this->tenant->id)], 'admin');
-
-        $this->deleteJson(tenant_route($tenant2->domains()->first()->domain, 'manage.auth.logout'))
-        ->assertStatus(401);
     }
 }
