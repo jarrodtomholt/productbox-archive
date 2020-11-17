@@ -4,15 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Tenant;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TenantActiveMiddlewareTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->artisan('migrate:fresh');
-    }
+    use RefreshDatabase;
 
     /** @test */
     public function it_does_not_allow_access_to_tenants_if_inactive()
