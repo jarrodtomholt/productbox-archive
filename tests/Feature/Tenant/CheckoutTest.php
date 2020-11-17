@@ -4,8 +4,10 @@ namespace Tests\Feature\Tenant;
 
 use Tests\TestCase;
 use App\Models\Item;
+use App\Models\User;
 use App\Models\Coupon;
 use App\Facades\Settings;
+use Laravel\Sanctum\Sanctum;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CheckoutTest extends TestCase
@@ -213,6 +215,46 @@ class CheckoutTest extends TestCase
             'postcode' => $request['postcode'],
             'total' => intval(Cart::total() * 100),
             'delivery_fee' => intval(8.5 * 100),
+        ]);
+    }
+
+    /** @test */
+    public function it_associates_an_authenticated_user_at_checkout()
+    {
+        tenancy()->end(); // already initialised in TestCase due to protected $tenancy = true;
+
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        tenancy()->initialize($this->tenant); // reinitialise
+
+        Cart::add(Item::factory()->available()->create());
+
+        $request = [
+            'name' => 'Test Customer',
+            'email' => 'test.customer@example.dev',
+            'phone' => '1234567890',
+            'address' => '1 fake street',
+            'city' => 'Somewhere',
+            'state' => 'VIC',
+            'postcode' => '1234',
+            'deliveryType' => 'pickup',
+            'token' => 'tok_au',
+        ];
+
+        $this->postJson(tenant_route($this->tenant->domains()->first()->domain, 'app.checkout'), $request)
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas('orders', [
+            'user_id' => $user->id,
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'address' => $request['address'],
+            'city' => $request['city'],
+            'state' => $request['state'],
+            'postcode' => $request['postcode'],
+            'total' => intval(Cart::total() * 100),
         ]);
     }
 }
