@@ -8,7 +8,7 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "nuxt:app": "NODE_ENV=development nuxt -c app.config.js",
+        "nuxt:app": "NODE_ENV=development nuxt -c nuxt.app.config.js",
         "nuxt:build": "nuxt build",
         "nuxt:generate": "nuxt generate",
         "nuxt:start": "nuxt start"

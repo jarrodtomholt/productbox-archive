@@ -8,12 +8,13 @@ const config = { ...original }
 config.rootDir = resolve('./resources/app')
 config.modules = [...(config.modules || []), 'nuxt-laravel']
 config.laravel = {
-  dotEnvExport: true
+    server: false,
+    dotEnvExport: true
 }
 
 config.router = {
-  ...config.router,
-  base: '/app/'
+    ...config.router,
+    base: process.env === 'production' ? '' : '/dev/'
 }
 
 export default config
