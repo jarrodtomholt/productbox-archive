@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66356ec69fc38f97236b2dff928bd113",
+    "content-hash": "a92d758c42c3900b7f653eaa867e7db2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2267,6 +2267,73 @@
                 }
             ],
             "time": "2020-10-18T11:50:25+00:00"
+        },
+        {
+            "name": "m2s/laravel-nuxt",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/m2sd/laravel-nuxt.git",
+                "reference": "5d5c6110ffeb1eddd469c470432811a03189bc6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/m2sd/laravel-nuxt/zipball/5d5c6110ffeb1eddd469c470432811a03189bc6b",
+                "reference": "5d5c6110ffeb1eddd469c470432811a03189bc6b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.0",
+                "laravel/framework": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "pedrotroller/php-cs-custom-fixer": "^2.23",
+                "phpmd/phpmd": "^2.8",
+                "phpro/grumphp": "^0.18.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "M2S\\LaravelNuxt\\LaravelNuxtServiceProvider"
+                    ],
+                    "aliases": {
+                        "Nuxt": "M2S\\LaravelNuxt\\Facades\\Nuxt"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "M2S\\LaravelNuxt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Marcenich",
+                    "email": "info@m-squared-solutions.it"
+                }
+            ],
+            "description": "NuxtJS framework integration for Laravel",
+            "keywords": [
+                "SPA",
+                "laravel",
+                "nuxt",
+                "nuxtjs",
+                "pwa",
+                "typescript"
+            ],
+            "support": {
+                "email": "info@m-squared-solutions.it",
+                "issues": "https://github.com/m2sd/laravel-nuxt/issues",
+                "source": "https://github.com/m2sd/laravel-nuxt"
+            },
+            "time": "2020-09-13T09:04:24+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
