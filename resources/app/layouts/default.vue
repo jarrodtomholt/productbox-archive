@@ -1,62 +1,48 @@
 <template>
-  <div>
-    <Nuxt />
-  </div>
+    <div class="h-screen w-screen flex flex-col flex-1 items-center justify-center bg-gray-100 font-sans">
+        <div v-if="$fetchState.pending" class="flex flex-col flex-1">
+            <div class="flex flex-1 items-center justify-center">
+                <div class="loader text-pink-600">Loading</div>
+            </div>
+
+            <p class="pb-8 text-gray-400 font-light">
+                Powered by <span class="text-pink-600">ProductBox</span> &copy; 2020
+            </p>
+        </div>
+        <div v-else>
+            <Nuxt />
+        </div>
+    </div>
 </template>
 
-<style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script>
+import { mapGetters } from 'vuex'
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
+export default {
+    computed: {
+        ...mapGetters({
+            settings: 'settings/all',
+        }),
+    },
+    watch: {
+        settings(value) {
+            if (!value) {
+                return
+            }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
+            document.documentElement.style.setProperty('--primaryColor', value.theme.primaryColor)
+            document.documentElement.style.setProperty('--secondaryColor', value.theme.secondaryColor)
+        },
+    },
+    async fetch () {
+        this.$axios.defaults.baseURL = `${window.location.origin}/api`
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+        return this.$axios.get('/').then(response => {
+            this.$store.dispatch('categories/store', response.data.categories)
+            this.$store.dispatch('settings/store', response.data.settings)
+        })
+    },
+    fetchOnServer: false,
+    fetchDelay: 500,
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
-</style>
+</script>

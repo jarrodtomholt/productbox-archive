@@ -11,7 +11,8 @@ export default {
             { hid: 'description', name: 'description', content: '' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            { rel: 'stylesheet', href: 'https://rsms.me/inter/inter.css' }
         ]
     },
 
@@ -45,7 +46,7 @@ export default {
         extractCSS: true,
         postcss: {
             plugins: {
-                'postcss-import': {},
+                'postcss-import': true,
                 tailwindcss: './tailwind.config.js',
                 'postcss-nested': {},
                 'postcss-preset-env' : {
@@ -56,7 +57,7 @@ export default {
             }
         },
         preset: {
-            stage: 1,
+            stage: 0,
         }
     }
 }

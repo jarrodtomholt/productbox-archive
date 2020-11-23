@@ -17,14 +17,6 @@ use App\Http\Controllers\Site\StripeConnectController;
 */
 
 Route::get('/', function () {
-    // $tenant = \App\Models\Tenant::create([
-    //     'name' => 'Demo',
-    //     'email' => 'demo@productbox.test',
-    //     'phone' => '1234567890',
-    //     'active' => true,
-    // ]);
-    // $tenant->domains()->create(['domain' => 'demo.productbox.test']);
-
     return view('welcome');
 });
 
