@@ -48,6 +48,11 @@ export default {
                 'postcss-import': {},
                 tailwindcss: './tailwind.config.js',
                 'postcss-nested': {},
+                'postcss-preset-env' : {
+                    features: {
+                        'focus-within-pseudo-class': false
+                    }
+                },
             }
         },
         preset: {

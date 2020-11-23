@@ -11,4 +11,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 
+/public/app
+/public/manage
+
 proxy.conf

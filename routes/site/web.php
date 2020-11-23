@@ -17,13 +17,13 @@ use App\Http\Controllers\Site\StripeConnectController;
 */
 
 Route::get('/', function () {
-    $tenant = \App\Models\Tenant::create([
-        'name' => 'Test',
-        'email' => 'test@test.com',
-        'phone' => '123456',
-        'active' => false,
-    ]);
-    $tenant->domains()->create(['domain' => 'test.productbox.test']);
+    // $tenant = \App\Models\Tenant::create([
+    //     'name' => 'Demo',
+    //     'email' => 'demo@productbox.test',
+    //     'phone' => '1234567890',
+    //     'active' => true,
+    // ]);
+    // $tenant->domains()->create(['domain' => 'demo.productbox.test']);
 
     return view('welcome');
 });

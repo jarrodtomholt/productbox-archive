@@ -3862,16 +3862,16 @@
         },
         {
             "name": "spatie/image-optimizer",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image-optimizer.git",
-                "reference": "f87f8328ca5bfabb3811241f5d35f17e146f7f83"
+                "reference": "b622d0cf29f57d7735d49f2b62471e6b788cb291"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/f87f8328ca5bfabb3811241f5d35f17e146f7f83",
-                "reference": "f87f8328ca5bfabb3811241f5d35f17e146f7f83",
+                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/b622d0cf29f57d7735d49f2b62471e6b788cb291",
+                "reference": "b622d0cf29f57d7735d49f2b62471e6b788cb291",
                 "shasum": ""
             },
             "require": {
@@ -3910,9 +3910,9 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/image-optimizer/issues",
-                "source": "https://github.com/spatie/image-optimizer/tree/1.3.0"
+                "source": "https://github.com/spatie/image-optimizer/tree/1.3.1"
             },
-            "time": "2020-11-10T13:45:49+00:00"
+            "time": "2020-11-20T11:36:11+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -4357,16 +4357,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.64.0",
+            "version": "v7.65.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "783557801e6def695ff134291d9614e6268834da"
+                "reference": "d4a22eeec7654efb8476fe8bea95b1e9928025a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/783557801e6def695ff134291d9614e6268834da",
-                "reference": "783557801e6def695ff134291d9614e6268834da",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/d4a22eeec7654efb8476fe8bea95b1e9928025a6",
+                "reference": "d4a22eeec7654efb8476fe8bea95b1e9928025a6",
                 "shasum": ""
             },
             "require": {
@@ -4412,9 +4412,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v7.64.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v7.65.0"
             },
-            "time": "2020-11-18T21:03:34+00:00"
+            "time": "2020-11-19T19:37:25+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
