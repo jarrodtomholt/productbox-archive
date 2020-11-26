@@ -9,13 +9,13 @@ export const getters = {
 }
 
 export const mutations = {
-    SET_DETAILS(state, payload) {
+    STORE(state, payload) {
         state.all = payload
     },
 }
 
 export const actions = {
     store({ commit }, payload) {
-        commit('SET_DETAILS', payload)
+        commit('STORE', payload)
     }
 }

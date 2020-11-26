@@ -1,3 +1,5 @@
+import { resolve } from 'path'
+
 export default {
     // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
     ssr: false,
@@ -23,6 +25,8 @@ export default {
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: [
+        '~/plugins/axios.js',
+        '~/plugins/directives.js',
     ],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -47,7 +51,7 @@ export default {
         postcss: {
             plugins: {
                 'postcss-import': true,
-                tailwindcss: './tailwind.config.js',
+                tailwindcss: resolve('resources/app/tailwind.config.js'),
                 'postcss-nested': {},
                 'postcss-preset-env' : {
                     features: {

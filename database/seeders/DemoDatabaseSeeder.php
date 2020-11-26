@@ -43,9 +43,9 @@ class DemoDatabaseSeeder extends Seeder
 
             Settings::set([
                 'name' => 'Demo',
-                'email' => 'demo@hungr.test',
+                'email' => 'demo@productbox.test',
                 'phone' => '1234567890',
-                'messageOfTheDay' => 'Welcome the hungr demo!',
+                'messageOfTheDay' => 'Welcome to our ProductBox demo',
                 'deliveryEnabled' => false,
                 'primaryColor' => '#da1074',
                 'secondaryColor' => '#143642',

@@ -1,45 +1,74 @@
 <template>
-    <div class="h-screen w-screen flex flex-col flex-1 items-center justify-center bg-gray-100 font-sans">
-        <div v-if="$fetchState.pending" class="flex flex-col flex-1">
-            <div class="flex flex-1 items-center justify-center">
-                <div class="loader text-pink-600">Loading</div>
-            </div>
-
-            <p class="pb-8 text-gray-400 font-light">
-                Powered by <span class="text-pink-600">ProductBox</span> &copy; 2020
-            </p>
-        </div>
+    <div class="h-screen w-screen overflow-hidden bg-gray-50 font-sans">
+        <Loader v-if="$fetchState.pending" />
         <div v-else>
+            <Header />
             <Nuxt />
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="fixed bottom-0 inset-x-0 pb-2 sm:pb-5">
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="p-2 rounded-lg bg-indigo-600 shadow-lg sm:p-3">
+      <div class="flex items-center justify-between flex-wrap">
+        <div class="w-0 flex-1 flex items-center">
+          <span class="flex p-2 rounded-lg bg-indigo-800">
+            <!-- Heroicon name: speakerphone -->
+            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+          </span>
+          <p class="ml-3 font-medium text-white truncate">
+            <span class="md:hidden">
+              We announced a new product!
+            </span>
+            <span class="hidden md:inline">
+              Big news! We're excited to announce a brand new product.
+            </span>
+          </p>
+        </div>
+        <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+          <a href="#" class="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50">
+            Learn more
+          </a>
+        </div>
+        <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
+          <button type="button" class="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white">
+            <span class="sr-only">Dismiss</span>
+            <!-- Heroicon name: x -->
+            <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
         </div>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Loader from '~/components/loader'
+import Header from '~/components/header'
 
 export default {
+    name: 'defaultLayout',
+    components: {
+        Loader,
+        Header,
+    },
     computed: {
         ...mapGetters({
             settings: 'settings/all',
         }),
     },
-    watch: {
-        settings(value) {
-            if (!value) {
-                return
-            }
-
-            document.documentElement.style.setProperty('--primaryColor', value.theme.primaryColor)
-            document.documentElement.style.setProperty('--secondaryColor', value.theme.secondaryColor)
-        },
-    },
     async fetch () {
-        this.$axios.defaults.baseURL = `${window.location.origin}/api`
-
-        return this.$axios.get('/').then(response => {
-            this.$store.dispatch('categories/store', response.data.categories)
-            this.$store.dispatch('settings/store', response.data.settings)
+        await this.$axios.get('/').then(response => {
+            this.$store.dispatch('categories/store', response.categories)
+            this.$store.dispatch('settings/store', response.settings)
         })
     },
     fetchOnServer: false,
