@@ -16,7 +16,7 @@ class CartResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'content' => Cart::content(),
+            'content' => Cart::count() ? Cart::content() : null,
             'subtotal' => Cart::priceTotal(),
             'coupon' => [
                 'description' => session()->get('coupon'),

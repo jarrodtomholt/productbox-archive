@@ -9,13 +9,22 @@
             <div v-if="open" class="origin-top-right absolute right-0 mt-2 w-screen sm:max-w-md sm:px-0">
                 <div v-if="content" class="bg-white sm:rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                     <div class="max-h-96 z-20 relative grid gap-6 px-5 py-6 sm:gap-8 sm:p-8 overflow-y-auto">
-                        <div v-for="(item, rowId) in content">
-                            {{ item.name }} qty:{{ item.qty }} ${{ item.subtotal }}
-                            <button @click="remove(item)">Remove</button>
+                        <div v-for="(item, rowId) in content" :key="rowId" class="grid grid-col-2">
+                            <div class="inline-flex w-full items-center justify-between">
+                                <h4 class="text-gray-800 font-medium">{{ item.name }}</h4>
+                                <small class="text-xl text-gray-900 font-medium">${{ item.subtotal }}</small>
+                            </div>
+                            <div class="inline-flex w-full items-center justify-between">
+                                <p class="text-gray-400 text-sm font-light">variants|options</p>
+                                <div>
+                                    - {{ item.qty }} +
+                                    <button @click="remove(item)">Remove</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button class="w-full items-center justify-center text-center px-5 py-5 bg-gray-50 space-y-6">
-                        ${{ total }}
+                    <button class="w-full items-center justify-center text-center px-5 py-5 bg-gray-50 space-y-6 border border-transparent leading-4 font-medium shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-300">
+                        ${{ total }} Checkout
                     </button>
                 </div>
                 <div v-else class="bg-white sm:rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
@@ -51,13 +60,13 @@ export default {
             this.open = false
         },
         remove(item) {
-            this.$axios.delete('/cart', { params: { rowId: item.rowId } }).then(response => {
+            this.$axios.delete('cart', { params: { rowId: item.rowId } }).then(response => {
                 this.$store.dispatch('cart/store', response)
             })
         }
     },
     async fetch() {
-        await this.$axios.get('/cart').then(response => {
+        await this.$axios.get('cart').then(response => {
             this.$store.dispatch('cart/store', response)
         })
     }

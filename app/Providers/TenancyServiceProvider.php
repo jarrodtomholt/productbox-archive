@@ -77,7 +77,14 @@ class TenancyServiceProvider extends ServiceProvider
             ],
 
             Events\BootstrappingTenancy::class => [],
-            Events\TenancyBootstrapped::class => [],
+            Events\TenancyBootstrapped::class => [
+                function () {
+                    config()->set(
+                        'sanctum.stateful',
+                        tenant()->domains()->pluck('domain')->toArray()
+                    );
+                }
+            ],
             Events\RevertingToCentralContext::class => [],
             Events\RevertedToCentralContext::class => [],
 
