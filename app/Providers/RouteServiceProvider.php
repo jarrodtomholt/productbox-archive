@@ -38,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         Route::domain('auth.' . config('app.domain'))->name('auth.')->group(function () {
-            Route::middleware('api')->group(base_path('routes/auth/api.php'));
+            Route::middleware('api')->prefix('api')->group(base_path('routes/auth/api.php'));
             Route::middleware('web')->group(base_path('routes/auth/web.php'));
         });
 

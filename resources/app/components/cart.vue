@@ -16,9 +16,18 @@
                             </div>
                             <div class="inline-flex w-full items-center justify-between">
                                 <p class="text-gray-400 text-sm font-light">variants|options</p>
-                                <div>
-                                    - {{ item.qty }} +
-                                    <button @click="remove(item)">Remove</button>
+                                <div class="inline-flex items-center">
+                                    <span class="relative z-0 inline-flex shadow-sm rounded-md">
+                                        <button @click="decrement(item)" type="button" class="relative inline-flex items-center px-3 py-1 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                                            -
+                                        </button>
+                                        <span class="-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                            {{ item.qty }}
+                                        </span>
+                                        <button @click="increment(item)" type="button" class="-ml-px relative inline-flex items-center px-3 py-1 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                                            +
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -59,16 +68,23 @@ export default {
         close() {
             this.open = false
         },
-        remove(item) {
-            this.$axios.delete('cart', { params: { rowId: item.rowId } }).then(response => {
+        increment(item) {
+            this.$axios.put('cart', { rowId: item.rowId, quantity: ++item.qty }).then(response => {
                 this.$store.dispatch('cart/store', response)
             })
-        }
+        },
+        decrement(item) {
+            this.$axios.put('cart', { rowId: item.rowId, quantity: --item.qty }).then(response => {
+                this.$store.dispatch('cart/store', response)
+            })
+        },
     },
     async fetch() {
         await this.$axios.get('cart').then(response => {
             this.$store.dispatch('cart/store', response)
         })
-    }
+    },
+    fetchOnServer: false,
+    fetchDelay: 500,
 }
 </script>

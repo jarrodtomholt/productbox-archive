@@ -15,6 +15,7 @@ Route::post('password/reset', [ResetPasswordController::class, 'store'])->name('
 Route::post('register', [RegisterController::class, 'store'])->name('register');
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [AuthController::class, 'index'])->name('user');
     Route::delete('logout', [AuthController::class, 'delete'])->name('logout');
 
     Route::post('devices', [DevicesController::class, 'store'])->name('device');

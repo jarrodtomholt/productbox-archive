@@ -10,6 +10,11 @@ use App\Http\Resources\Auth\UserResource;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        return new UserResource(auth()->user());
+    }
+
     public function store(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
