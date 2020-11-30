@@ -24,6 +24,7 @@
         "autoprefixer": "^9.8.6",
         "moment": "^2.29.1",
         "postcss": "^7.0.35",
-        "tailwindcss": "^2.0.1-compat"
+        "tailwindcss": "^2.0.1-compat",
+        "vuex-persistedstate": "^4.0.0-beta.1"
     }
 }

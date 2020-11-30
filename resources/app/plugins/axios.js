@@ -15,10 +15,10 @@ export default function ({ app, store, $axios, redirect }, inject) {
     axios.setBaseURL(`${window.location.origin}/api/`)
 
     axios.onRequest(config => {
-        // let authToken = store.getters['auth/token']
-        // if (authToken) {
-        //     config.headers.common = { 'Authorization': `Bearer ${authToken}` }
-        // }
+        let user = store.getters['auth/user']
+        if (user) {
+            config.headers.common = { 'Authorization': `Bearer ${user.token}` }
+        }
     })
 
     axios.onResponse(response => {

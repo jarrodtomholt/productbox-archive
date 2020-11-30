@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Item;
+use App\Models\User;
 use App\Models\Option;
 use App\Models\Tenant;
 use App\Models\Variant;
@@ -19,6 +20,11 @@ class DemoDatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::factory()->create([
+            'email' => 'user@productbox.test',
+            'password' => 'password',
+        ]);
+
         $tenant = Tenant::create([
             'name' => 'Demo',
             'email' => 'demo@productbox.test',

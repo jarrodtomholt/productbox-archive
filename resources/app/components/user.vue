@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="open = !open" class="inline-block h-14 w-14 rounded-full overflow-hidden bg-gray-100">
+        <button @click="open = !open" class="inline-block h-14 w-14 rounded-full overflow-hidden bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
             <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
@@ -28,13 +28,13 @@
                             </div>
 
                             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                                <form class="space-y-6" action="#" method="POST">
+                                <form @submit.prevent="login" class="space-y-6" action="#" method="POST">
                                     <div>
                                         <label for="email" class="block text-sm font-medium text-gray-700">
                                             Email address
                                         </label>
                                         <div class="mt-1">
-                                            <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                            <input v-model="email" id="email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                         </div>
                                     </div>
 
@@ -43,7 +43,7 @@
                                             Password
                                         </label>
                                         <div class="mt-1">
-                                            <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                            <input v-model="password" id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                         </div>
                                     </div>
 
@@ -110,13 +110,23 @@ export default {
     data() {
         return {
             open: false,
+            email: null,
+            password: null
         }
     },
     methods: {
+        login() {
+            this.$axios.post('https://auth.productbox.test/api/login', {
+                email: this.email,
+                password: this.password,
+            }).then(response => {
+                this.$store.dispatch('auth/store', response)
+            })
+        }
     },
     async fetch() {
         await this.$axios.get('https://auth.productbox.test/api/user').then(response => {
-            console.log('auth called successfully')
+
         })
     },
     fetchOnServer: false,

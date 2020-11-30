@@ -36,6 +36,11 @@ class User extends Authenticatable
         'addresses',
     ];
 
+    public function getFullNameAttribute()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
     public function devices(): ?MorphMany
     {
         return $this->morphMany(Device::class, 'user');
