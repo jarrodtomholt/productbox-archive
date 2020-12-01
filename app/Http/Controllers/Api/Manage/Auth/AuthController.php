@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Manage;
+namespace App\Http\Controllers\Api\Manage\Auth;
 
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
@@ -10,6 +10,11 @@ use App\Http\Requests\Manage\Auth\LoginRequest;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        return new AdminResource(auth()->user());
+    }
+
     public function store(LoginRequest $request)
     {
         $user = Admin::where('email', $request->input('email'))->first();

@@ -18,7 +18,7 @@ class AdminResource extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
-            'token' => $this->currentAccessToken() ?? $this->createToken(Agent::device(), [
+            'token' => $this->currentAccessToken() ? $request->bearerToken() : $this->createToken(Agent::device(), [
                 sprintf('manage:%s', tenant('id')),
             ])->plainTextToken,
         ];

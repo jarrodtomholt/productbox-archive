@@ -58,10 +58,10 @@ class SignupTest extends TestCase
             'type' => 'card',
             'card' => [
                 'number' => '4242424242424242',
-                'exp_month' => now()->add('1 month')->month,
-                'exp_year' => now()->year,
+                'exp_month' => now()->addMonth()->month,
+                'exp_year' => now()->addYear()->year,
                 'cvc' => '314',
-            ],
+            ]
         ]);
 
         $postData = array_merge(Tenant::factory()->make()->toArray(), [
@@ -81,8 +81,8 @@ class SignupTest extends TestCase
             'type' => 'card',
             'card' => [
                 'number' => '4242424242424242',
-                'exp_month' => now()->add('1 month')->month,
-                'exp_year' => now()->year,
+                'exp_month' => now()->addMonth()->month,
+                'exp_year' => now()->addYear()->year,
                 'cvc' => '314',
             ],
         ]);

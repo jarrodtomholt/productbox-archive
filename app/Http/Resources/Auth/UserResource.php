@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'name' => $this->fullName,
             'email' => $this->email,
             'phone' => $this->phone,
-            'token' => $this->currentAccessToken() ?? $this->createToken(Agent::device())->plainTextToken,
+            'token' => $this->currentAccessToken() ? $request->bearerToken() : $this->createToken(Agent::device())->plainTextToken,
             'addresses' => AddressResource::collection($this->addresses),
         ];
     }

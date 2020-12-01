@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Manage;
+namespace App\Http\Controllers\Api\Manage\Auth;
 
 use Illuminate\Http\Request;
 use App\Rules\PasswordStrength;

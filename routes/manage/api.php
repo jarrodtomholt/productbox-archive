@@ -1,16 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Manage\AuthController;
 use App\Http\Controllers\Api\Manage\ItemsController;
 use App\Http\Controllers\Api\Manage\CouponController;
 use App\Http\Controllers\Api\Manage\OptionsController;
 use App\Http\Controllers\Api\Manage\SettingsController;
 use App\Http\Controllers\Api\Manage\VariantsController;
+use App\Http\Controllers\Api\Manage\Auth\AuthController;
 use App\Http\Controllers\Api\Manage\CategoriesController;
 use App\Http\Controllers\Api\Manage\Auth\DevicesController;
-use App\Http\Controllers\Api\Manage\ResetPasswordController;
-use App\Http\Controllers\Api\Manage\ForgotPasswordController;
+use App\Http\Controllers\Api\Manage\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\Manage\Auth\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------

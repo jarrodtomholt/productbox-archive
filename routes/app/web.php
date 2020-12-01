@@ -12,5 +12,7 @@
 */
 
 Route::get('/{any?}', function () {
+    return tenant('id');
+
     return file_get_contents(config('nuxt.app.source'));
 })->where('any', '.*')->name('home');
