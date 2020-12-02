@@ -28,6 +28,7 @@ export default {
         '~/plugins/axios.js',
         '~/plugins/localStorage.js',
         '~/plugins/directives.js',
+        '~/plugins/filters.js',
     ],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)

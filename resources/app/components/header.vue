@@ -5,14 +5,7 @@
             <h1 class="text-gray-800 font-semibold tracking-wide text-3xl">{{ settings.name }}</h1>
         </div>
         <div class="flex flex-row items-center space-x-8">
-            <div class="px-4 text-right">
-                <p class="capitalize text-gray-700 text-xl leading-snug font-bold">
-                    {{ currentStatus }}
-                </p>
-                <p class="text-gray-400 text-md font-light">
-                    {{ nextOpenTime }} to {{ nextCloseTime }} {{ nextOpenDate }}
-                </p>
-            </div>
+            <Status />
             <User />
             <Cart />
         </div>
@@ -21,13 +14,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import moment from 'moment'
+import Status from '~/components/status'
 import User from '~/components/user'
 import Cart from '~/components/cart'
 
 export default {
     name: 'Header',
     components: {
+        Status,
         User,
         Cart,
     },
@@ -35,22 +29,6 @@ export default {
         ...mapGetters({
             settings: 'settings/all',
         }),
-        currentStatus() {
-            return this.settings.openingHours.isOpen ? 'open' : 'closed'
-        },
-        nextOpenDate() {
-            return moment().calendar(this.settings.openingHours.nextOpen, {
-                sameDay: '[Today]',
-                lastDay: '[Tomorrow]',
-                lastWeek: 'D-M-Y',
-            });
-        },
-        nextOpenTime() {
-            return moment(this.settings.openingHours.nextOpen).format('LT')
-        },
-        nextCloseTime() {
-            return moment(this.settings.openingHours.nextClose).format('LT')
-        }
     },
 }
 </script>

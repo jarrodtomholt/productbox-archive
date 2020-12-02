@@ -1,17 +1,19 @@
 <template>
-    <div v-click-away="close">
-        <button @click="open = !open" class="inline-block h-14 w-14 rounded-full overflow-hidden bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
-            <span v-if="user">{{ user.name|initials }}</span>
+    <div v-click-away="close" class="z-10 sm:relative">
+        <button @click="open = !open" class="h-14 w-14 inline-flex items-center justify-center border border-transparent leading-4 font-medium rounded-full shadow-sm transition ease-out duration-100 overflow-hidden bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
+            <span v-if="user" class="inline-flex h-full w-full items-center justify-center text-gray-900">
+                {{ user.name|initials }}
+            </span>
             <svg v-else class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
         </button>
 
-        <div v-if="user" class="relative inline-block text-left">
+        <div v-if="user">
             <transition enter-active-class="transition ease-out duration-100" enter-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <div v-if="open" class="origin-top-right absolute right-0 mt-8 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+                <div v-if="open" class="origin-top-right-0 absolute w-screen right-0 mt-2 sm:w-56 sm:rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
                     <div class="px-4 py-3">
-                        <p class="text-sm font-medium truncate">
+                        <p class="text-indigo-600 text-sm font-medium truncate">
                             {{ user.name }}
                         </p>
                         <p class="text-sm font-light text-gray-900 truncate">
@@ -34,70 +36,48 @@
             </transition>
         </div>
 
-        <div v-else class="fixed z-10 inset-0 overflow-y-auto" :class="{ 'pointer-events-none' : !open }">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <transition enter-active-class="ease-out duration-300" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="ease-in duration-200" leave-class="opacity-100" leave-to-class="opacity-0">
-                    <div v-if="open" class="fixed inset-0 transition-opacity" aria-hidden="true">
-                        <div @click="open = false" class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                    </div>
-                </transition>
-
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                    &#8203;
-                </span>
-
-                <transition enter-active-class="ease-out duration-300" enter-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to-class="opacity-100 translate-y-0 sm:scale-100" leave-active-class="ease-in duration-200" leave-class="opacity-100 translate-y-0 sm:scale-100" leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-                    <div v-if="open" class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden h-screen w-screen shadow-xl transform transition-all sm:h-auto sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-                        <div class="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-                            <div class="sm:mx-auto sm:w-full sm:max-w-md">
-                                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                                    Sign in to your account
-                                </h2>
-                            </div>
-
-                            <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                                <form @submit.prevent="login" class="space-y-6">
-                                    <div>
-                                        <label for="email" class="block text-sm font-medium text-gray-700">
-                                            Email address
-                                        </label>
-                                        <div class="mt-1">
-                                            <input v-model="email" id="email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        <div v-else>
+            <transition enter-active-class="transition ease-out duration-100" enter-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                <div v-if="open" class="origin-top-right absolute right-0 mt-2 w-screen sm:max-w-md sm:px-0">
+                    <div class="bg-white sm:rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+                        <div class="flex flex-1 items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+                            <div class="max-w-md w-full space-y-8">
+                                <div>
+                                    <h2 class="mt-2 text-center text-xl font-extrabold text-gray-900">
+                                        Sign in to your productbox account
+                                    </h2>
+                                </div>
+                                <form @submit.prevent="login" class="mt-8 space-y-6">
+                                    <input type="hidden" name="remember" value="true">
+                                    <div class="rounded-md shadow-sm -space-y-px">
+                                        <div>
+                                            <label for="email-address" class="sr-only">Email address</label>
+                                            <input v-model="email" id="email-address" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full p-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+                                        </div>
+                                        <div>
+                                            <label for="password" class="sr-only">Password</label>
+                                            <input v-model="password" id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full p-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label for="password" class="block text-sm font-medium text-gray-700">
-                                            Password
-                                        </label>
-                                        <div class="mt-1">
-                                            <input v-model="password" id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        </div>
-                                    </div>
-
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center">
-                                            <input id="remember_me" name="remember_me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                                            <label for="remember_me" class="ml-2 block text-sm text-gray-900">
-                                                Remember me
-                                            </label>
-                                        </div>
-
+                                    <div class="flex items-center justify-end">
                                         <div class="text-sm">
-                                            <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+                                            <a href="#" class="font-light text-indigo-600 hover:text-indigo-500">
                                                 Forgot your password?
                                             </a>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 transition duration-300 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                                                <svg class="h-5 w-5 text-indigo-500 transition duration-300 group-hover:text-indigo-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
                                             Sign in
                                         </button>
                                     </div>
-                                </form>
-
-                                <div class="mt-6">
                                     <div class="relative">
                                         <div class="absolute inset-0 flex items-center">
                                             <div class="w-full border-t border-gray-300"></div>
@@ -108,18 +88,17 @@
                                             </span>
                                         </div>
                                     </div>
-
-                                    <div class="mt-6 flex-1">
-                                        <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <div>
+                                        <a href="#" class="w-full inline-flex justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                                             Register
-                                        </button>
+                                        </a>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
-
                     </div>
-                </transition>
+                </div>
+            </transition>
             </div>
         </div>
     </div>
@@ -153,16 +132,14 @@ export default {
                 email: this.email,
                 password: this.password,
             }).then(response => {
-                this.$store.dispatch('auth/store', response)
-            }).finally(() => {
                 this.open = false
+                this.$store.dispatch('auth/store', response)
             })
         },
         logout() {
             this.$axios.delete('https://auth.productbox.test/api/logout').then(response => {
-                this.$store.dispatch('auth/store', response)
-            }).finally(() => {
                 this.open = false
+                this.$store.dispatch('auth/store', response)
             })
         },
         close() {
