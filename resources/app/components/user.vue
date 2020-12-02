@@ -1,13 +1,40 @@
 <template>
-    <div>
+    <div v-click-away="close">
         <button @click="open = !open" class="inline-block h-14 w-14 rounded-full overflow-hidden bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300">
-            <span v-if="user">User</span>
+            <span v-if="user">{{ user.name|initials }}</span>
             <svg v-else class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
         </button>
 
-        <div class="fixed z-10 inset-0 overflow-y-auto" :class="{ 'pointer-events-none' : !open }">
+        <div v-if="user" class="relative inline-block text-left">
+            <transition enter-active-class="transition ease-out duration-100" enter-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                <div v-if="open" class="origin-top-right absolute right-0 mt-8 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+                    <div class="px-4 py-3">
+                        <p class="text-sm font-medium truncate">
+                            {{ user.name }}
+                        </p>
+                        <p class="text-sm font-light text-gray-900 truncate">
+                            {{ user.email }}
+                        </p>
+                    </div>
+                    <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Account settings</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Support</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">License</a>
+                    </div>
+                    <div class="py-1">
+                        <form @submit.prevent="logout">
+                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
+                                Sign out
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </transition>
+        </div>
+
+        <div v-else class="fixed z-10 inset-0 overflow-y-auto" :class="{ 'pointer-events-none' : !open }">
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <transition enter-active-class="ease-out duration-300" enter-class="opacity-0" enter-to-class="opacity-100" leave-active-class="ease-in duration-200" leave-class="opacity-100" leave-to-class="opacity-0">
                     <div v-if="open" class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -29,7 +56,7 @@
                             </div>
 
                             <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                                <form @submit.prevent="login" class="space-y-6" action="#" method="POST">
+                                <form @submit.prevent="login" class="space-y-6">
                                     <div>
                                         <label for="email" class="block text-sm font-medium text-gray-700">
                                             Email address
@@ -103,6 +130,11 @@ import { mapGetters } from 'vuex'
 
 export default {
     name: 'User',
+    filters: {
+        initials(name) {
+            return name.match(/(^\S\S?|\b\S)?/g).join("").match(/(^\S|\S$)?/g).join("").toUpperCase()
+        }
+    },
     computed: {
         ...mapGetters({
             user: 'auth/user',
@@ -125,7 +157,17 @@ export default {
             }).finally(() => {
                 this.open = false
             })
-        }
+        },
+        logout() {
+            this.$axios.delete('https://auth.productbox.test/api/logout').then(response => {
+                this.$store.dispatch('auth/store', response)
+            }).finally(() => {
+                this.open = false
+            })
+        },
+        close() {
+            this.open = false
+        },
     },
     async fetch() {
         await this.$axios.get('https://auth.productbox.test/api/user').then(response => {

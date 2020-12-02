@@ -15,9 +15,9 @@ export default function ({ app, store, $axios, redirect }, inject) {
     axios.setBaseURL(`${window.location.origin}/api/`)
 
     axios.onRequest(config => {
-        let user = store.getters['auth/user']
-        if (user) {
-            config.headers.common = { 'Authorization': `Bearer ${user.token}` }
+        let token = store.getters['auth/token']
+        if (token) {
+            config.headers.common = { 'Authorization': `Bearer ${token}` }
         }
     })
 
