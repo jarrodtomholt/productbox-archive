@@ -30,6 +30,10 @@ export default {
             });
         },
         nextOpenTime() {
+            if (this.settings.openingHours.isOpen) {
+                return 'Now'
+            }
+
             return moment(this.settings.openingHours.nextOpen).format('LT')
         },
         nextCloseTime() {
