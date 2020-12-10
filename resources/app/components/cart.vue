@@ -12,7 +12,7 @@
                 <div v-if="content" class="bg-white sm:rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                     <div class="max-h-96 z-20 relative grid gap-6 px-5 py-6 sm:gap-8 sm:p-8 overflow-y-auto">
                         <div v-for="(item, rowId) in content" :key="rowId" class="grid grid-col-2">
-                            <div class="inline-flex w-full items-center justify-between">
+                            <div class="inline-flex w-full items-end justify-between truncate">
                                 <h4 class="text-gray-800 font-medium">
                                     {{ item.name }}
                                 </h4>
@@ -20,9 +20,18 @@
                                     ${{ item.subtotal|formatMoney }}
                                 </small>
                             </div>
-                            <div class="inline-flex w-full items-center justify-between">
-                                <p class="text-gray-400 text-sm font-light">variants|options</p>
-                                <div class="inline-flex items-center">
+                            <div class="inline-flex w-full items-start justify-between">
+                                <div v-if="item.options" class="space-y-1">
+                                    <p v-if="item.options.variant" class="text-gray-500 text-sm font-regular">
+                                        {{ item.options.variant.name }}
+                                    </p>
+                                    <div>
+                                        <p v-if="item.options.options" v-for="(option, index) in item.options.options" class="text-gray-400 text-sm font-light">
+                                            {{ option.name }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="inline-flex items-center mt-1">
                                     <span class="relative z-0 inline-flex shadow-sm rounded-md">
                                         <button @click="decrement(item)" type="button" class="relative inline-flex items-center px-3 py-1 rounded-l-md border border-gray-300 bg-white text-xs font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                                             -
@@ -87,12 +96,20 @@ export default {
             this.open = false
         },
         increment(item) {
-            this.$axios.put('cart', { rowId: item.rowId, quantity: ++item.qty }).then(response => {
+            if (item.qty === 0) {
+                return
+            }
+            let clone = Object.assign({}, item)
+            this.$axios.put('cart', { rowId: clone.rowId, quantity: ++clone.qty }).then(response => {
                 this.$store.dispatch('cart/store', response)
             })
         },
         decrement(item) {
-            this.$axios.put('cart', { rowId: item.rowId, quantity: --item.qty }).then(response => {
+            if (item.qty === 0) {
+                return
+            }
+            let clone = Object.assign({}, item)
+            this.$axios.put('cart', { rowId: clone.rowId, quantity: --clone.qty }).then(response => {
                 this.$store.dispatch('cart/store', response)
             })
         },

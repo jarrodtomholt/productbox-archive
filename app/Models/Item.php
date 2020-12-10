@@ -94,7 +94,7 @@ class Item extends Model implements HasMedia, Buyable
         $selections = collect($selections);
 
         if ($selections->has('variant')) {
-            $price = $this->variants->where('slug', $selections->get('variant'))->first()->price;
+            $price = $this->variants->where('slug', $selections->get('variant')['slug'])->first()->price;
         }
 
         if ($selections->has('options')) {

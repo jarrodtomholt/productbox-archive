@@ -21,7 +21,7 @@
                 <img src="https://www.fillmurray.com/200/200" class="h-48 w-48 rounded-full">
                 <h3>{{ item.name }}</h3>
                 <p>${{ item.price }}</p>
-            </NuxtLink>>
+            </NuxtLink>
         </div>
     </div>
 </template>

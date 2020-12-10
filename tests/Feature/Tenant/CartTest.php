@@ -17,7 +17,7 @@ class CartTest extends TestCase
     {
         $this->get(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'))
             ->assertSuccessful()
-            ->assertJsonFragment(['total' => '0.00']);
+            ->assertJsonFragment(['total' => 0]);
     }
 
     /** @test */
@@ -117,7 +117,7 @@ class CartTest extends TestCase
         $this->delete(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'rowId' => $rowId,
         ])->assertSuccessful()
-        ->assertJsonFragment(['total' => '0.00']);
+        ->assertJsonFragment(['total' => 0]);
     }
 
     /** @test */
@@ -131,7 +131,7 @@ class CartTest extends TestCase
 
         $this->delete(tenant_route($this->tenant->domains()->first()->domain, 'app.cart.clear'))
         ->assertSuccessful()
-        ->assertJsonFragment(['total' => '0.00']);
+        ->assertJsonFragment(['total' => 0]);
     }
 
     /** @test */
@@ -146,7 +146,7 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'variant' => $variant->slug,
+                'variant' => $variant,
             ],
         ])->assertSuccessful();
 
@@ -165,7 +165,7 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'options' => $option->slug,
+                'options' => $option,
             ],
         ])->assertSuccessful();
 
@@ -186,7 +186,7 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'options' => $options->pluck('slug')->toArray(),
+                'options' => $options->toArray(),
             ],
         ])->assertSuccessful();
 
@@ -210,8 +210,8 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'variant' => $variant->slug,
-                'options' => $option->slug,
+                'variant' => $variant,
+                'options' => $option,
             ],
         ])->assertSuccessful();
 
@@ -236,8 +236,8 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'variant' => $variant->slug,
-                'options' => $options->pluck('slug')->toArray(),
+                'variant' => $variant,
+                'options' => $options->toArray(),
             ],
         ])->assertSuccessful();
 
@@ -257,7 +257,7 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'variant' => $variant->slug,
+                'variant' => $variant,
             ],
         ])->assertSuccessful();
 
@@ -282,14 +282,14 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'variant' => $variants->first()->slug,
+                'variant' => $variants->first(),
             ],
         ])->assertSuccessful();
 
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'variant' => $variants->last()->slug,
+                'variant' => $variants->last(),
             ],
         ])->assertSuccessful();
 
@@ -310,14 +310,14 @@ class CartTest extends TestCase
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'options' => [$options->first()->slug],
+                'options' => $options->first(),
             ],
         ])->assertSuccessful();
 
         $this->post(tenant_route($this->tenant->domains()->first()->domain, 'app.cart'), [
             'item' => $item->slug,
             'selections' => [
-                'options' => [$options->last()->slug],
+                'options' => $options->last(),
             ],
         ])->assertSuccessful();
 
