@@ -4,7 +4,7 @@
         <div class="flex flex-row flex-1 space-x-6">
             <category-list />
 
-            <p>Home page</p>
+            <category-items />
 
         </div>
     </div>
@@ -13,23 +13,21 @@
 <script>
 import { mapGetters } from 'vuex'
 import categoryList from '~/components/categoryList'
+import categoryItems from '~/components/categoryItems'
 
 export default {
-    name: 'Index',
+    name: 'CategoryIndex',
     components: {
         categoryList,
+        categoryItems,
     },
     computed: {
         ...mapGetters({
-            settings: 'settings/all',
+            categories: 'categories/all',
         }),
-    },
-    methods: {
-        addToCart(item) {
-            this.$axios.post('/cart', {
-                item: item.slug
-            }).then(response => {
-                this.$store.dispatch('cart/store', response)
+        category() {
+            return this.categories.find(category => {
+                return category.slug === this.$route.params.category
             })
         }
     },

@@ -17,12 +17,12 @@ class CartResource extends JsonResource
     {
         return [
             'content' => Cart::count() ? Cart::content() : null,
-            'subtotal' => Cart::priceTotal(),
+            'subtotal' => filter_var(Cart::priceTotal(), FILTER_SANITIZE_NUMBER_INT) / 100,
             'coupon' => [
                 'description' => session()->get('coupon'),
                 'discount' => Cart::discount(),
             ],
-            'total' => Cart::total(),
+            'total' => filter_var(Cart::total(), FILTER_SANITIZE_NUMBER_INT) / 100,
         ];
     }
 }
