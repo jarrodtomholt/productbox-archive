@@ -57,8 +57,13 @@
                     </button>
                 </div>
                 <div v-else class="bg-white sm:rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                    <div class="text-center relative grid gap-6 px-5 py-6 sm:gap-8 sm:p-8">
-                        <p class="text-gray-500 font-light">Not hungry?</p>
+                    <div class="text-center relative px-5 py-6 space-y-2">
+                        <h6 class="text-center text-lg font-extrabold text-gray-900">
+                            Not hungry?
+                        </h6>
+                        <p class="text-gray-400 text-sm font-light">
+                            Try adding something delicious from the menu
+                        </p>
                     </div>
                 </div>
             </div>

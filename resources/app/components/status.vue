@@ -1,8 +1,8 @@
 <template>
     <div class="px-4 text-right">
-        <p class="capitalize text-gray-700 text-lg leading-snug font-bold">
+        <h6 class="capitalize text-lg font-extrabold text-gray-900 leading-snug">
             {{ currentStatus }}
-        </p>
+        </h6>
         <p class="text-gray-400 text-sm font-light">
             {{ nextOpenTime }} to {{ nextCloseTime }} {{ nextOpenDate }}
         </p>
