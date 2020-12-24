@@ -23,7 +23,9 @@ export default {
             return this.settings.openingHours.isOpen ? 'open' : 'closed'
         },
         nextOpenDate() {
-            return moment().calendar(this.settings.openingHours.nextOpen, {
+            return moment().calendar(this.settings.openingHours.isOpen
+                ? this.settings.openingHours.nextClose
+                : this.settings.openingHours.nextOpen, {
                 sameDay: '[Today]',
                 lastDay: '[Tomorrow]',
                 lastWeek: 'D-M-Y',
