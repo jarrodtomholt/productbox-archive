@@ -12,9 +12,9 @@
         "nuxt:app:build": "nuxt build -c nuxt.app.config.js"
     },
     "devDependencies": {
-        "cross-env": "^7.0",
+        "cross-env": "^7.0.3",
         "laravel-mix": "^5.0.1",
-        "nuxt": "^2.14.7",
+        "nuxt": "^2.14.12",
         "resolve-url-loader": "^3.1.0"
     },
     "dependencies": {
@@ -24,7 +24,7 @@
         "autoprefixer": "^9.8.6",
         "moment": "^2.29.1",
         "postcss": "^7.0.35",
-        "tailwindcss": "^2.0.1-compat",
+        "tailwindcss": "^2.0.2",
         "vuex-persistedstate": "^4.0.0-beta.1"
     }
 }
