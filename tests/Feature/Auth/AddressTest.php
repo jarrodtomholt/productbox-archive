@@ -83,6 +83,14 @@ class AddressTest extends TestCase
             ->assertSee($address->postcode);
 
         $this->assertTrue($user->fresh()->addresses->count() === 1);
+
+        $this->assertDatabaseHas('addresses', [
+            'user_id' => $user->id,
+            'address' => $address->address,
+            'city' => $address->city,
+            'state' => $address->state,
+            'postcode' => $address->postcode,
+        ]);
     }
 
     /** @test */
@@ -104,5 +112,13 @@ class AddressTest extends TestCase
         ->assertDontSee($address->postcode);
 
         $this->assertTrue($user->fresh()->addresses->count() === 0);
+
+        $this->assertDatabaseMissing('addresses', [
+            'user_id' => $user->id,
+            'address' => $address->address,
+            'city' => $address->city,
+            'state' => $address->state,
+            'postcode' => $address->postcode,
+        ]);
     }
 }
