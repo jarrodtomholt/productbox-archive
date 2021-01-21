@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0",
         "bumbummen99/shoppingcart": "^3.0",
+        "enlightn/enlightn": "^1.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
